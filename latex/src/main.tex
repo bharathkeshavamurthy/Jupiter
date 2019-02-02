@@ -1,0 +1,624 @@
+%\documentclass[journal]{IEEEtran}
+\documentclass[12pt, draftcls, onecolumn]{IEEEtran}
+\makeatletter
+% journal (default) and conference
+\def\subsubsection{\@startsection{subsubsection}% name
+                                 {3}% level
+                                 {\z@}% indent (formerly \parindent)
+                                 {0ex plus 0.1ex minus 0.1ex}% before skip
+                                 {0ex}% after skip
+                                 {\normalfont\normalsize\bfseries}}% style
+\makeatother
+\usepackage[T1]{fontenc}% optional T1 font encoding
+%\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{ulem}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage{hhline}
+\usepackage{yfonts,color}
+\usepackage{soul,xcolor}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{array}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{framed} % for frame
+\usepackage{balance} % balance
+\usepackage{epsfig,epstopdf}
+\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{subfigure}
+\usepackage{pseudocode}
+\usepackage{enumerate}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\renewcommand{\algorithmicrequire}{\textbf{Initialization:}}  % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}}  % Use Output in the format of 
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\usepackage{color}
+\usepackage{soul,xcolor}
+\newcommand{\nm}[1]{{\color{blue}\text{\bf{[NM: #1]}}}}
+\newcommand{\sst}[1]{\st{#1}}
+\newcommand{\gs}[1]{{\color{orange}\bf{[GS: #1]}}}
+\newcommand{\remove}[1]{{\color{magenta}{\bf REMOVE: [#1]}}}
+%\newcommand{\nm}[1]{}
+%\newcommand{\sst}[1]{}
+%\newcommand{\gs}[1]{}
+%\newcommand{\remove}[1]{}
+\newcommand{\add}[1]{{\color{red}{#1}}}
+\newcommand{\ull}[1]{\textbf{\color{red}\ul{#1}}}
+%\pagestyle{empty}
+\normalem
+\begin{document} 
+\setulcolor{red}
+\setul{red}{2pt}
+\title{ECE64700: Homework I}
+\author{Bharath Keshavamurthy and Nicol{\'o} Michelusi}
+\maketitle
+\setstcolor{red}
+\section{Convex Sets}
+\subsection{Solutions to Exercise 1}
+\[C \subseteq \mathbb{R}^n,\ \lambda_1 > 0\ and\ \lambda_2 > 0\]
+\[C\ is\ convex\]
+\[A\ \triangleq\ \alpha S\ =\ \{\alpha x: x \in S\}\]
+\[B\ \triangleq\ S_1+S_2\ =\ \{x_1+x_2: x_1 \in S_1, x_2 \in S_2\}\]
+For any two points $x_1,\ x_2\ \in\ C$, $\theta x_1+ \Bar{\theta} x_2\ \in\ C$, for any $0 \leq \theta \leq 1$. 
+\\In other words, the line segment between any two points in C lies in C.
+\\In order to prove two sets $A$ and $B$ are equal, we need to prove that all the elements in $A$ are in $B$ and all the elements in $B$ are in $A$. \\Mathematically,
+\[A \subseteq B,\ and\]
+\[B \subseteq A\]
+If $x_1\ =\ x_2$ in the set definition of B,
+\[\lambda_1 x_1 + \lambda_2 x_1\ \in\ B,\ for\ any\ x_1\ \in\ C\]
+Since, $x_1\ \in\ C$,
+\[\lambda_1 x_1 + \lambda_2 x_1\ \in\ A\]
+Similarly,
+\[\lambda_1 x_2 + \lambda_2 x_2\ \in\ B,\ for\ any\ x_2\ \in\ C\]
+Since, $x_2\ \in\ C$,
+\[\lambda_1 x_2 + \lambda_2 x_2\ \in\ A\]
+Now, if $x_1\ \neq\ x_2$ in the set definition of B,
+\[\lambda_1 x_1 + \lambda_2 x_2\ \in\ B,\ for\ any\ x_1,\ x_2\ \in\ C\]
+If $x_1,\ x_2\ \in\ C$, $\theta x_1+ \Bar{\theta} x_2\ \in\ C$, for any $0 \leq \theta \leq 1$. 
+\\So, 
+\[(\lambda_1+\lambda_2)(\theta x_1+ \Bar{\theta} x_2)\ \in\ A\]
+\[(\lambda_1+\lambda_2)\theta x_1+(\lambda_1+\lambda_2)\Bar{\theta} x_2\]
+Let,
+\[\theta\ =\ \frac{\lambda_1}{\lambda_1+\lambda_2}\]
+\[\Bar{\theta}\ =\ 1-\theta\ =\ \frac{\lambda_2}{\lambda_1+\lambda_2}\]
+These substitutions are valid because,
+\[0\leq \theta \leq 1,\ since\ \lambda_1 > 0,\ and\ \lambda_2 > 0\]
+Using these substitutions,
+\[\lambda_1 x_1 + \lambda_2 x_2\ \in\ A,\ for\ any\ x_1,\ x_2\ \in\ C\]
+This property need not be true when C is not convex because,
+\[\theta x_1+ \Bar{\theta} x_2\ \not\in\ C,\ for\ any\ x_1,\ x_2\ \in C\ and\ for\ any\ 0 \leq \theta \leq 1\]
+This means that for some $x_1,\ x_2\ \in\ C$,
+\[\lambda_1 x_1 + \lambda_2 x_2\ \in\ B\]
+\[\lambda_1 x_1 + \lambda_2 x_2\ \not\in\ A\]
+Consider the following example,
+\[Let,\ C\ =\ \{5,\ 6\}\]
+$C$ is not a convex set because it does not contain the line segment between $5$ and $6$.
+\[Let,\ \lambda_1\ =\ 1,\ \lambda_2\ =\ 1\]
+\[A\ =\ \{10,\ 12\}\]
+\[B\ =\ \{10,\ 11,\ 12\}\]
+$11$ in set $B$ does not exist in set $A$.
+\\However, now consider the case in which $C$ is a convex set, i.e. $C$ contains the line segment between $5$ and $6$.
+\\Since, $0.5(5) + 0.5(6)\ =\ 5.5\ \in\ C,\ for\ \theta\ =\ \Bar{\theta}\ =\ 0.5$, 
+\[(\lambda_1+\lambda_2)5.5\ =\ 11\ \in\ A\]
+This can be done for all the elements in $C$ (convex). In other words, for all the elements in $C$ (convex), we can prove that $A\ \subseteq\ B$ and $B\ \subseteq\ A$.
+\subsection{Solutions to Exercise 2}
+\subsubsection{$S_1\ \equiv\ \mathcal{B}(0,\ r)$}
+A closed Euclidean Ball in $\mathbb{R}^2$ centered at $0$ with radius $r$ is defined as,
+\[S_1\ \equiv\ \mathcal{B}(0,\ r)\ =\ \{x\ \in\ \mathbb{R}^2:\ ||x||_2 \leq r\}\]
+For $S_1$ to be a convex set, $\theta x_1 + \Bar{\theta} x_2\ \in\ S_1$ for any two points $x_1,\ x_2\ \in\ S_1$ and for any $0 \leq \theta \leq 1$.
+\\In other words, we need to prove that,
+\[||\theta x_1 + \Bar{\theta} x_2||_2 \leq r\]
+To prove this result, we know from the Triangle Inequality that,
+\[||\theta x_1 + \Bar{\theta} x_2||_2 \leq ||\theta x_1||_2 + ||\Bar{\theta} x_2||_2\]
+This can be written as,
+\[||\theta x_1 + \Bar{\theta} x_2||_2 \leq \theta||x_1||_2 + \Bar{\theta} ||x_2||_2\]
+Since, $||x_1||_2 \leq r$, $||x_2||_2 \leq r$, and $0 \leq \theta \leq 1$,
+\[\theta||x_1||_2 + \Bar{\theta}||x_2||_2 \leq r\]
+Which implies,
+\[||\theta x_1 + \Bar{\theta} x_2||_2 \leq r\]
+Therefore,
+$S_1$ is a convex set.
+\\In order to represent $S_1\ \equiv\ \mathcal{B}(0,\ r)$ as an intersection of halfspaces, consider the points on the boundary of $S_1$. Then, treating tangents at all points on the boundary of $S_1$ as hyperplanes, we can write,
+\[S_1\ \equiv\ \mathcal{B}(0,\ r)\ =\ \bigcap_{y\ \in\ \mathbb{R}^2:\ ||y||_2\ =\ r}\ \{x\ \in\ \mathbb{R}^2:\ x^T y \leq r\}\]
+\subsubsection{$S_2\ \equiv\ \{x\ \in\ \mathbb{R}^n:\ x_i\ \in\ (-1,\ 1),\ \forall i\ =\ 1,\ 2,\ ....,\ n\}$}
+An open set in $\mathbb{R}^n$
+\\For $S_2$ to be a convex set, $\theta x+\Bar{\theta} y\ \in\ S_2$ for any two points $x,\ y\ \in\ S_2$ and for any $0 \leq \theta \leq 1$.
+To prove this, consider,
+\[\theta x + \Bar{\theta} y\]
+Since $x_i\ \in\ (-1,\ 1),\ \forall i\ =\ 1,\ 2,\ ....,\ n$, $y_i\ \in\ (-1,\ 1),\ \forall i\ =\ 1,\ 2,\ ....,\ n$, and $0 \leq \theta \leq 1$,
+\[\theta x_i+ \Bar{\theta} y_i\ \in\ (-1,\ 1),\ \forall i\ =\ 1,\ 2,\ ....,\ n\]
+Which implies,
+\[\theta x+ \Bar{\theta} y\ \in\ S_2\]
+Therefore, $S_2$ is a convex set.
+\\$S_2$ can be written as the intersection of an infinite number of halfspaces as follows,
+\[S_2\ =\ \bigcap_{|r| \geq 1,\ a\ \in\ \mathbb{R}^n:\ ||a|| \geq 1}\ \{x\ \in\ \mathbb{R}^n:\ -r < a^T x < r\}\]
+Writing this halfspace representation in its minimal form,
+\[S_2\ =\ \bigcap_{a\ \in\ \mathbb{R}^n:\ ||a|| = 1}\ \{x\ \in\ \mathbb{R}^n:\ -1 < a^T x < 1\}\]
+For instance, for $\mathbb{R}^2$,
+\[S_2\ =\ \{x\ =\ (x_1,\ x_2)\ \in\ \mathbb{R}^2:\ -1 < x_1 < 1\}\ \bigcap\ \{x\ =\ (x_1,\ x_2)\ \in\ \mathbb{R}^2:\ -1 < x_2 < 1\}\]
+This intersection of 4 halfspaces in $\mathbb{R}^2$ represents the set $S_2$ which is an open square in $\mathbb{R}^2$.
+\subsection{Solutions to Exercise 3}
+The convex hull of a set $C$ is the smallest convex set that contains C.
+\\Consider a set $A$ consisting of a finite number of elements in $\mathbb{R}^n$.
+\[A\ \equiv\ \{x_1,\ x_2,\ x_3,\ ....,\ x_k\}\]
+The set $S_2$ in Exercise 2 is an open set in $\mathbb{R}^n$ which proves to be a convex set.
+\\But, since the set $S_2$ is an open set, it cannot be the smallest convex set containing A.
+\\Mathematically,
+\\If $A \subseteq S_2$, $conv(A)\ \neq\ S_2$
+\\If $A$ is the set of all points on the boundary of $S_2$,
+\[conv(A)\ =\ cl(S_2)\]
+But, $cl(S_2)\ \neq\ S_2$
+\\Therefore, the set $S_2$ cannot be written as the convex hull of the set $A$.
+\\The closure of a set $C$ denoted by $cl(C)$ is the smallest closed set containing all the elements of $C$.
+\\Therefore,
+\[cl(S_2)\ =\ \{x\ \in\ \mathbb{R}^n:\ x_i\ \in\ [-1,\ 1],\ \forall i\ =\ 1,\ 2,\ ....,\ n\}\]
+\subsection{Solutions to Exercise 4}
+The image of a convex set under an affine transformation is convex.
+\\\textbf{Claim}: The image of a convex set $S \subseteq \mathbb{R}^n$ under an affine transformation is convex.
+\\\textbf{Proof}: Consider an affine function (sum of a linear function and a constant) $f: \mathbb{R}^n \rightarrow \mathbb{R}^m$ such that the image of a convex set $S \subseteq \mathbb{R}^n$ under this affine transformation is given by,
+\[f(S)\ =\ \{Ax+b:\ x\ \in\ S\}\ \subseteq\ \mathbb{R}^m\]
+where,
+\[A\ \in\ \mathbb{R}^{m \times n}\]
+\[b\ \in\ \mathbb{R}^m\]
+\[x\ \in\ \mathbb{R}^n\]
+Since $S$ is a convex set, for any two points $x_1,\ x_2\ \in\ S$ and for any $0 \leq \theta \leq 1$,
+\[\theta x_1 + \Bar{\theta} x_2\ \in\ S\]
+Now,
+\[x_1\ \in\ S\ \implies\ Ax_1+b\ \in\ f(S)\]
+\[x_2\ \in\ S\ \implies\ Ax_2+b\ \in\ f(S)\]
+\[\theta x_1 + \Bar{\theta} x_2\ \in\ S\ \implies\ A(\theta x_1 + \Bar{\theta} x_2)+b\ \in\ f(S)\]
+To prove that $f(S)$ is a convex set, consider the points $Ax_1+b,\ Ax_2+b\ \in\ f(S)$ for any $x_1,\ x_2\ \in S$.
+\\The convex combination of these two points in $f(S)$ should exist in $f(S)$ for $f(S)$ to be a convex set.
+\\Since $\theta + \Bar{\theta}\ =\ 1$ and $A(\theta x_1 + \Bar{\theta}x_2)+b\ \in\ f(S)$ from before, we can now see that,
+\[\theta(Ax_1+b)+\Bar{\theta}(Ax_2+b)\ =\ A\theta x_1 + b\theta + A\Bar{\theta} x_2 + b\Bar{\theta}\ =\ A\theta x_1 + A\Bar{\theta} x_2 + b\ =\ A(\theta x_1 + \Bar{\theta}x_2)+b\ \in\ f(S)\]
+This proves that the convex combination of any two points in $f(S)$ are contained in $f(S)$.
+Therefore, the image $f(S)\ \subseteq\ \mathbb{R}^m$ of a convex set $S \subseteq \mathbb{R}^n$ under an affine transformation $f:\ \mathbb{R}^n \rightarrow \mathbb{R}^m$ is a convex set.
+\subsection{Solutions to Exercise 5}
+\subsubsection{[Boyd] 2.11}
+Hyperbolic sets
+\\\textbf{Claim}: The Hyperbolic set $C\ \equiv\ \{x\ \in\ \mathbb{R}_{++}^2:\ x_1x_2 \geq 1\}$ is convex.
+\\\textbf{Proof}: We know from Jensen's inequality that for a convex function $f(x)$ and for any $0 \leq \theta \leq 1$,
+\[f(\sum_i \theta_i x_i)\ \leq\ \sum_i(\theta_i f(x_i))\]
+For $a,\ b\ \in\ dom(f)$,
+\[f(\theta a + \Bar{\theta} b)\ \leq\ \theta f(a) + \Bar{\theta} f(b)\]
+We know that $-log(x)$ is a convex function. So, for any $a,\ b\ \in\ dom(-log(x))\ \equiv\ \mathbb{R}_{++}$,
+\[-log(\theta a + \Bar{\theta} b)\ \leq\ -\theta log(a) - \Bar{\theta} log(b)\]
+\[log(\theta a + \Bar{\theta} b)\ \geq\ \theta log(a) + \Bar{\theta} log(b)\]
+Applying the properties of logarithms we get,
+\[log(\theta a + \Bar{\theta} b)\ \geq\ log(a^\theta b^{\Bar{\theta}})\]
+Rearranging,
+\[a^\theta b^{\Bar{\theta}}\ \leq\ \theta a + \Bar{\theta} b\]
+Now, in order to prove that the set $C$ is a convex set, we need to prove that for any two points $x,\ y\ \in\ C$ and for any $0 \leq \theta \leq 1$, the convex combination of these two points $\theta x + \Bar{\theta} y\ \in\ C$.
+\\Therefore, we need to prove that,
+\[(\theta x_1 + \Bar{\theta} y_1)(\theta x_2 + \Bar{\theta} y_2)\ \geq\ 1\]
+From the set definition, we know that,
+\[x_1,\ x_2,\ y_1,\ y_2\ \in\ \mathbb{R}_{++}\]
+Using the inequality $a^\theta b^{\Bar{\theta}}\ \leq\ \theta a + \Bar{\theta} b$ we derived earlier,
+\[x_1^\theta y_1^{\Bar{\theta}}\ \leq\ \theta x_1 + \Bar{\theta} y_1\]
+\[x_2^\theta y_2^{\Bar{\theta}}\ \leq\ \theta x_2 + \Bar{\theta} y_2\]
+Since all the quantities involved in the inequalities are positive, we can multiply the corresponding members of the two,
+\[(x_1^\theta y_1^{\Bar{\theta}})(x_2^\theta y_2^{\Bar{\theta}}) \leq (\theta x_1 + \Bar{\theta} y_1)(\theta x_2 + \Bar{\theta} y_2)\]
+\[(x_1x_2)^\theta (y_1y_2)^{\Bar{\theta}} \leq (\theta x_1 + \Bar{\theta} y_1)(\theta x_2 + \Bar{\theta} y_2)\]
+Since $x_1x_2 \geq 1$, $y_1y_2 \geq 1$, and $0 \leq \theta \leq 1$,
+\[(\theta x_1 + \Bar{\theta} y_1)(\theta x_2 + \Bar{\theta} y_2)\ \geq\ 1\]
+Therefore,
+\[\theta x + \Bar{\theta} y\ \in\ C\]
+Hence,
+\[C\ \equiv\ \{x\ \in\ \mathbb{R}_{++}^2:\ x_1x_2 \geq 1\}\ is\ a\ convex\ set.\]
+In order to generalize the above result, we need to prove that,
+\[D\ \equiv\ \{x\ \in\ \mathbb{R}_{++}^n:\ \prod_{i=1}^n\ x_i=1\}\]
+From the set definition, we know that, for any two points $x, y\ \in\ D$,
+\[x_i,\ y_i\ \in\ \mathbb{R}_{++},\ \forall i\ =\ 1,\ 2,\ ....,\ n\]
+Using the inequality $a^\theta b^{\Bar{\theta}}\ \leq\ \theta a + \Bar{\theta} b$ we derived earlier, we can write,
+\[(\prod_{i=1}^n\ x_i)^\theta (\prod_{i=1}^n\ y_i)^{\Bar{\theta}} \leq \prod_{i=1}^n\ (\theta x_i + \Bar{\theta} y_i)\]
+Since, 
+\[\prod_{i=1}^n\ x_i \geq 1,\]
+\[\prod_{i=1}^n\ y_i \geq 1,\ and\]
+\[0 \leq \theta \leq 1\]
+\[(\prod_{i=1}^n\ x_i)^\theta (\prod_{i=1}^n\ y_i)^{\Bar{\theta}} \geq 1\]
+Which implies,
+\[\prod_{i=1}^n\ (\theta x_i + \Bar{\theta} y_i) \geq 1\]
+Therefore,
+\[\theta x + \Bar{\theta} y\ \in\ D\]
+Hence,
+\[D\ \equiv\ \{x\ \in\ \mathbb{R}_{++}^n:\ \prod_{i=1}^n\ x_i \geq 1\}\ is\ a\ convex\ set.\]
+\subsubsection{[Boyd] 2.12}
+Identifying convex sets
+\begin{enumerate}
+    \item A slab, $S\ \equiv\ \{x\ \in\ \mathbb{R}^n:\ \alpha \leq a^Tx \leq \beta\}$ is a convex set because it is an intersection of two halfspaces. Halfspaces are convex sets and the intersection of convex sets is another convex set.
+    \item A rectangle, $S\ \equiv\ \{x\ \in\ \mathbb{R}^n:\ \alpha_i \leq x_i \leq \beta_i,\ i\ =\ 1,\ 2,\ ....,\ n\}$ is a convex set because it is an intersection of a finite number of halfspaces. Halfspaces are convex sets and the intersection of convex sets is another convex set.
+    \item A wedge, $S\ \equiv\ \{x\ \in\ \mathbb{R}^n:\ a_1^Tx \leq b_1,\ a_2^Tx \leq b_2\}$ is a convex set because it is an intersection of two halfspaces. Halfspaces are convex sets and the intersection of convex sets is another convex set.
+    \item The set of points closer to a given point than to a given set, \newline $A\ \equiv\ \{x: ||x-x_0||_2 \leq ||x-y||_2,\ \forall y\ \in\ S\}$ is a convex set because it is an intersection of a finite number of half-spaces.
+    \\For a fixed $y\ \in\ S$, consider the set,
+    \[A_y\ \equiv\ \{x:\ ||x-x_0||_2 \leq ||x-y||_2\}\]
+    Square on both sides and expand the Euclidean norm,
+    \[=\ \{x:\ (x-x_0)^T(x-x_0) \leq (x-y)^T(x-y)\}\]
+    \[=\ \{x:\ x^Tx-x^Tx_0-x_0^Tx+x_0^Tx_0 \leq x^Tx-x^Ty-y^Tx+y^Ty\}\]
+    Rearranging the terms,
+    \[=\ \{x:\ x^Tx-2x_0^Tx+x_0^Tx_0 \leq x^Tx-2y^Tx+y^Ty\}\]
+    Simplifying,
+    \[=\ \{x:\ 2y^Tx-2x_0^Tx \leq y^Ty-x_0^Tx_0\}\]
+    Rearranging into the standard form of a halfspace,
+    \[=\ \{x:\ 2(y-x_0)^Tx \leq y^Ty-x_0^Tx_0\}\]
+    Which is a halfspace of the form $\{x:\ a^Tx \leq b\}$.
+    \\For any $y\ \in\ S$, the set $A$ can be written as follows,
+    \[A\ =\ \bigcap_{y\ \in\ S}\ A_y\]
+    Therefore, the set $S$ is a convex set because it is an intersection of a finite number of halfspaces.
+    \item The set of points closer to one set than another, $A\ \equiv\ \{x: dist(x,\ S) \leq dist(x,\ T)\}$, where $S,\ T \subseteq \mathbb{R}^n$, and
+    $dist(x,\ S)\ =\ inf\{||x-z||_2\ |\ z\ \in\ S\}$ is not a convex set. \\Consider the following counter-example.
+    \\Let, $S\ \equiv\ \{x\ \in\ \mathbb{R}^2:\ x_1 < -3\}\ \cup\ \{x\ \in\ \mathbb{R}^2:\ x_1 > 3\}$.
+    \\Let $T\ \equiv\ \{x\ \in\ \mathbb{R}^2:\ x_1\ =\ 0\}$ be a hyperplane in $\mathbb{R}^2$
+    \\In this example, the set of all points closer to set $S$ than to set $T$ is not a convex set.
+    \item The set $C\ \equiv\ \{x:\ x+S_2 \subseteq S_1$\}, where $S_1,\ S_2 \subseteq \mathbb{R}^n$ with $S_1$ being convex is a convex set because it is an intersection of convex sets.
+    Consider the set,
+    \[C_y\ \equiv\ \{x:\ x+y\ \in\ S_1\}\ =\ \{z-y:\ z\ \in\ S_1\}\]
+    $C_y$ is a convex set because it is the image of the convex set $S_1$ under an affine transformation.
+    \[C\ =\ \bigcap_{y\ \in\ S_2}\ C_y\]
+    Therefore, the set $C$ is a convex set because it is an intersection of convex sets.
+    \item The set of points whose distance to $a$ does not exceed a fixed fraction $\theta$ of the distance to $b$, $S\ \equiv\ \{x:\ ||x-a||_2 \leq \theta ||x-b||_2\}$, where $a \neq b$ and $0 \leq \theta \leq 1$ is a convex set for reasons detailed below.
+    \\If $\theta\ =\ 1$, the set $S$ reduces to $\{x:\ ||x-a||_2 \leq ||x-b||_2\}$ which as we showed in item 4 [The set of all points closer to a point $x_0=a$ than to another point $y=b$] is a convex set.
+    \\For $0 \leq \theta < 1$, let's square on both sides,
+    \[\{x:\ ||x-a||_2^2 \leq \theta^2 ||x-b||_2^2\}\]
+    Expand the norms,
+    \[\{x:\ (x-a)^T(x-a) \leq \theta^2 (x-b)^T(x-b)\}\]
+    \[\{x:\ x^Tx-x^Ta-a^Tx+a^Ta \leq \theta^2x^Tx-\theta^2x^Tb-\theta^2b^Tx+\theta^2b^Tb\}\]
+    Rearranging the terms,
+    \[\{x:\ (1-\theta^2)x^Tx-2a^Tx+2\theta^2b^Tx \leq \theta^2b^Tb-a^Ta\}\]
+    Divide by $(1-\theta^2)$ on both sides of the inequality,
+    \[\{x:\ x^Tx-\frac{2(a^T-\theta^2b^T)x}{(1-\theta^2)} \leq \frac{\theta^2b^Tb-a^Ta}{(1-\theta^2)}\}\]
+    \[\{x:\ x^Tx-\frac{2(a-\theta^2b)^Tx}{(1-\theta^2)} \leq \frac{\theta^2b^Tb-a^Ta}{(1-\theta^2)}\}\]
+    Add $\frac{(a-\theta^2b)^T}{(1-\theta^2)}\frac{(a-\theta^2b)}{(1-\theta^2)}$ to both sides of the inequality,
+    \[\{x:\ x^Tx-\frac{2(a-\theta^2b)^Tx}{(1-\theta^2)}+\frac{(a-\theta^2b)^T}{(1-\theta^2)}\frac{(a-\theta^2b)}{(1-\theta^2)} \leq \frac{\theta^2b^Tb-a^Ta}{(1-\theta^2)}+\frac{(a-\theta^2b)^T}{(1-\theta^2)}\frac{(a-\theta^2b)}{(1-\theta^2)}\}\]
+    Treating $\frac{(a-\theta^2b)}{(1-\theta^2)}$ as $x_c$ and $\frac{\theta^2b^Tb-a^Ta}{(1-\theta^2)}+\frac{(a-\theta^2b)^T}{(1-\theta^2)}\frac{(a-\theta^2b)}{(1-\theta^2)}$ as $r^2$,
+    \[\{x:\ x^Tx-2x_c^Tx+x_c^Tx_c \leq r^2\}\]
+    \[\{x:\ ||x-x_c||_2^2 \leq r^2\}\]
+    \[\{x:\ ||x-x_c||_2 \leq r\}\]
+    This is a Euclidean Ball $\mathcal{B}(x_c,\ r)$ which is a convex set.
+    \\Therefore, the set $S$ is a convex set.
+\end{enumerate}
+\section{Convex Functions}
+\subsection{Solutions to Exercise 1}
+\subsubsection{Non-negative, Non-zero weighted sum of strictly convex functions}
+\[g(x)\ =\ \sum_{i=1}^N\ \alpha_i f_i(x)\]
+Here $f_i: \chi \rightarrow \mathbb{R}$, for $i\ =\ 1,\ 2,\ ....,\ N$ constitute $N$ strictly convex functions with domain $\chi \subseteq \mathbb{R}^n$ (convex). 
+\\\textbf{Claim}: For $N$ strictly convex functions $f_i(x),\ i\ =\ 1,\ 2,\ ....,\ N$, if $\alpha_i > 0$ for $i\ =\ 1,\ 2,\ ....,\ N$ then, $g(x)\ =\ \sum_{i=1}^N\ \alpha_if_i(x)$ is a strictly convex function.
+\\\textbf{Proof}: The domain of $g(x)$, i.e. $dom(g)\ =\ \bigcap_{i=1}^N\ dom(f_i)\ =\ \chi$ is a convex set because the intersection of convex sets is another convex set.
+\\For $g(x)$ to be a strictly convex function, the following inequality must be satisfied.
+\\For any $x,\ y\ \in\ dom(g)$ and for any $0 \leq \theta \leq 1$,
+\[g(\theta x + \Bar{\theta} y) < \theta g(x) + \Bar{\theta} g(y)\]
+\[\sum_{i=1}^N\ \alpha_i f_i(\theta x + \Bar{\theta} y) < \theta \sum_{i=1}^N\ \alpha_i f_i(x) + \Bar{\theta} \sum_{i=1}^N\ \alpha_i f_i(y)\]
+\[\sum_{i=1}^N\ \alpha_i f_i(\theta x + \Bar{\theta} y) < \sum_{i=1}^N\ \alpha_i(\theta f_i(x) + \Bar{\theta} f_i(y))\]
+Now, since $f_i(x)$ is a strictly convex function, i.e.,
+\[\theta f_i(x) + \Bar{\theta} f_i(y) > f_i(\theta x + \Bar{\theta} y)\]
+The inequality
+\[\sum_{i=1}^N\ \alpha_i f_i(\theta x + \Bar{\theta} y) < \sum_{i=1}^N\ \alpha_i(\theta f_i(x) + \Bar{\theta} f_i(y))\]
+will hold true only if $\alpha_i > 0,\ for\ i\ =\ 1,\ 2,\ ....,\ N$.
+\\Therefore, a non-negative, non-zero weighted sum of strictly convex functions is strictly convex.
+\\No, the above mentioned condition for the weights, i.e. $\alpha_i > 0$ is not a necessary condition. 
+\\Let us show this using a counter-example.
+\\Consider the following scenario,
+\[f_1(x)\ =\ -log(x)\ is\ a\ strictly\ convex\ function\]
+\[f_2(x)\ =\ -log(x)\ is\ a\ strictly\ convex\ function\]
+\[dom(f_1)\ =\ dom(f_2)\ =\ \mathbb{R}_{++}\ is\ a\ convex\ set\]
+\[g(x)\ =\ \alpha_1 f_1(x) + \alpha_2 f_2(x)\]
+Let, $\alpha_1\ =\ 0\ and\ \alpha_2\ =\ 1$.
+\[g(x)\ =\ -log(x)\]
+So, g(x) is a strictly convex function despite the weights not satisfying the result derived in the previous segment, i.e. $\alpha_i > 0$.
+\\Yes, the set of $\alpha\ =\ \{\alpha_1,\ \alpha_2,\ ....,\ \alpha_N\}$ is a convex set because the set $\alpha\ =\ \{a: a\ \in\ \mathbb{R}_{++}\}$ is a convex set.
+\subsubsection{Maximum of strictly convex functions}
+\[g(x)\ =\ \max_i\ f_i(x)\]
+\textbf{Claim}: For $N$ strictly convex functions $f_i(x),\ i\ =\ 1,\ 2,\ ....,\ N$, $\max_{i=1}^N\ f_i(x)$ is a convex function.
+\\\textbf{Proof}: The $dom(g)\ =\ \bigcap_{i=1}^N\ dom(f_i)\ =\ \chi$ is a convex set.
+\\Consider the epigraph of g(x).
+\[epi\ g\ =\ \{(x,\ t):\ t \geq \max_{i=1}^N\ f_i(x)\}\]
+\[epi\ g\ =\ \bigcap_{i=1}^N\ \{(x,\ t):\ t \geq f_i(x)\}\]
+\[epi\ g\ =\ \bigcap_{i=1}^N\ epi\ f_i\]
+Since $f_i$ is a convex function, $epi\ f_i$ is a convex set.
+\\The intersection of convex sets is another convex set.
+\\Therefore, $epi\ g$ is a convex set.
+\\Hence, $g(x)$ is a convex function.
+\\For $g(x)$ to be a strictly convex function, we need to prove that, for any $x,\ y\ \in\ dom(g)$ and for any $0 \leq \theta \leq 1$,
+\[g(\theta x + \Bar{\theta} y) < \theta g(x) + \Bar{\theta} g(y)\]
+Since $f_i(x)$ for $i\ =\ 1,\ 2,\ ....,\ N$ are strictly convex functions,
+\[f_i(\theta x + \Bar{\theta} y) < \theta f_i(x) + \Bar{\theta} f_i(y)\]
+Taking max on both sides of the inequality,
+\[\max_{i=1}^N\ f_i(\theta x + \Bar{\theta} y) < \max_{i=1}^N\ (\theta f_i(x) + \Bar{\theta} f_i(y))\]
+This can be written as,
+\[\max_{i=1}^N\ f_i(\theta x + \Bar{\theta} y) < \max_{i=1}^N\ (\theta f_i(x)) + \max_{i=1}^N(\Bar{\theta} f_i(y))\]
+\[\max_{i=1}^N\ f_i(\theta x + \Bar{\theta} y) < \theta \max_{i=1}^N\ (f_i(x)) + \Bar{\theta} \max_{i=1}^N(f_i(y))\]
+Now, from the definition of $g(x)$,
+\[g(\theta x + \Bar{\theta} y)\ < \theta g(x) + \Bar{\theta} g(y)\]
+Therefore, $g(x)$ is a strictly convex function.
+\subsection{Solutions to Exercise 2}
+\subsubsection{M/M/1 Queueing System}
+\begin{enumerate}
+    \item The set of $\lambda$ values such that the expected delay in the M/M/1 Queueing system is less than a given $d$ is a convex set due to the reasons detailed below.
+    \[A\ \equiv\ \{\lambda\ \in\ \mathbb{R}_{++}:\ \mathbb{E}[W] < d\}\]
+    For an M/M/1 Queueing system,
+    \[\mathbb{E}[W]\ =\ \frac{1}{\mu(1-\rho)}\]
+    where, 
+    \\$\mu\ \triangleq Service\ Rate\ of\ the\ Server$
+    \\and, 
+    \\$\rho\ \triangleq\ System\ Load\ or\ System\ Utilization\ =\ \frac{\lambda}{\mu}$
+    \\Therefore,
+    \[A\ \equiv\ \{\lambda\ \in\ \mathbb{R}_{++}:\ \frac{1}{\mu(1-\rho)} < d\}\]
+    \[=\ \{\lambda\ \in\ \mathbb{R}_{++}:\ \frac{1}{\mu-\lambda} < d\}\]
+    \[=\ \{\lambda\ \in\ \mathbb{R}_{++}:\ 1 < d\mu-d\lambda\}\]
+    \[=\ \{\lambda\ \in\ \mathbb{R}_{++}:\ d(\lambda-\mu)+1 < 0\}\]
+    This can be treated as the sub-level set of $f(\lambda)\ =\ d(\lambda-\mu)+1$.
+    \\We know that, if $f(\lambda)$ is a convex function, then all its sub-level sets are convex sets.
+    \\So, in order to prove that the set $A$ is a convex set, we need to prove that $f(\lambda)$ is a convex function. \\After which, it is trivial to prove that $C_0\ =\ \{\lambda\ \in\ \mathbb{R}_{++}:\ f(\lambda) < 0\}\ =\ A$ is a convex set.
+    \\The function $f(\lambda)\ =\ d(\lambda-\mu)+1$ is an affine function because,
+    \[f^{''}(\lambda)\ =\ 0\]
+    and, for any $\lambda,\ \nu\ \in\ dom(f)$ and for any $0 \leq \theta \leq 1$,
+    \[f(\theta \lambda + \Bar{\theta} \nu)\ =\ \theta f(\lambda) + \Bar{\theta} f(\nu)\]
+    Therefore, $f(\lambda)$ is a convex function and as a result $\{\lambda\ \in\ \mathbb{R}_{++}:\ \mathbb{E}[W] < d\}$ is a convex set.
+    \item The set of $(\lambda,\ d)$ pairs such that the expected delay in the M/M/1 queueing system is less than a given $d$ is a convex set for reasons detailed below.
+    \[B\ \equiv\ \{(\lambda,\ d):\ \mathbb{E}[W] < d\}\]
+    \[=\ \{(\lambda,\ d):\ \frac{1}{\mu(1-\rho)} < d\}\]
+    \[=\ \{(\lambda,\ d):\ \frac{1}{\mu-\lambda} < d\}\]
+    \[=\ \{(\lambda,\ d):\ d(\lambda-\mu)+1 < 0\}\]
+    This can be treated as the epigraph of the convex function $f(\lambda)$.
+    \\Since a function is convex if and only if its epigraph is a convex set and knowing that $f(\lambda)$ is a convex function from the previous item, 
+    \\The set $B\ \equiv\ \{(\lambda,\ d):\ \mathbb{E}[W] < d\}$ is a convex set.
+\end{enumerate}
+\subsection{Multi-User Wireless Communication System}
+\begin{enumerate}
+    \item The set of vectors $\Vec{P}\ =\ (P_0,\ P_1,\ ....,\ P_I)$ such that the achievable rate of user 0 is greater than a given value $r$ is a convex set for reasons detailed below.
+    \[S\ \equiv\ \{\Vec{P}:\ C_0(\Vec{P}) > r\}\]
+    \[S\ \equiv\ \{\Vec{P}:\ r-C_0(\Vec{P}) < 0\}\]
+    \[C_0(\Vec{P})\ =\ Wlog_2[1+\frac{P_0}{(\sum_{i=1}^I\ P_i) + N_0}]\]
+    We can prove that $C_0(P)$ is a concave function using the following approximations.
+    \[\frac{W}{log_e2}log_e[\frac{P_0}{(\sum_{i=1}^I\ P_i)+N_0}] \geq C_0(\Vec{P}) \geq \frac{W}{log_e2}[\frac{P_0}{(\sum_{i=1}^I\ P_i)+N_0}]\]
+    Using substitutions $P_i\ =\ e^{x_i}$,
+    \[\frac{W}{log_e2}log_e[\frac{e^{x_0}}{(\sum_{i=1}^I\ e^{x_i})+N_0}] \geq C_0(\Vec{P}) \geq \frac{W}{log_e2}[\frac{e^{x_0}}{(\sum_{i=1}^I\ e^{x_i})+N_0}]\]
+    \[\frac{W}{log_e2}[x_0-log_e(\sum_{i=1}^I\ e^{x_i}+N_0)] \geq C_0(\Vec{P}) \geq log_e[\frac{W}{log_e2}]+x_0-log_e(\sum_{i=1}^I\ e^{x_i}+N_0)]\]
+    Both approximations (Very Low SINR regime and Very High SINR regime) of the function $C_0(\Vec{P})$ are concave because $log$ is a concave function, $x_0$ is affine (both convex and concave), $-log_e(\sum_{i=1}^I\ e^{x_i}+N_0)$ is concave, and sum of concave functions is concave.
+    \\To prove the concavity of $-log_e(\sum_{i=1}^I\ e^{x_i}+N_0)$, let's prove the convexity of 
+    \[g(\Vec{x})\ =\ log_e(\sum_{i=1}^I\ e^{x_i}+N_0)\]
+    For any $\Vec{x},\ \Vec{y}\ \in\ dom(g)$ where, $dom(g)\ \subseteq \mathbb{R}^I\ (convex)$ and for any $0 \leq \theta \leq 1$, we need to prove that,
+    \[g(\theta \Vec{x} + \Bar{\theta} \Vec{y}) \leq \theta g(\Vec{x}) + \Bar{\theta} g(\Vec{y})\]
+    We can write the left hand side of the above inequality as follows,
+    \[g(\theta \Vec{x} + \Bar{\theta} \Vec{y}) = log_e(\sum_{i=1}^I\ e^{\theta x_i + \Bar{\theta} y_i}+N_0)\]
+    $N_0$ can be written as $e^{log_e N_0}$,
+    \[g(\theta \Vec{x} + \Bar{\theta} \Vec{y}) = log_e(\sum_{i=1}^I\ e^{\theta x_i + \Bar{\theta} y_i}+e^{log_e N_0})\]
+    This can further be simplified into,
+    \[g(\theta \Vec{x} + \Bar{\theta} \Vec{y}) = log_e(\sum_{i=1}^{I+1}\ e^{\theta x_i + \Bar{\theta} y_i})\]
+    Let $a_i\ =\ e^{x_i}$ and $b_i\ =\ e^{y_i}$.
+    \[g(\theta \Vec{x} + \Bar{\theta} \Vec{y}) = log_e(\sum_{i=1}^{I+1}\ a_i^{\theta}b_i^{\Bar{\theta}})\]
+    We know from H{\"o}lder's inequality that,
+    \[\sum_{i=1}^N\ x_i y_i\ \leq\ (\sum_{i=1}^N\ |x_i|^p)^\frac{1}{p} (\sum_{i=1}^N\ |y_i|^q)^\frac{1}{q}\]
+    Using $x_i\ =\ a_i^{\theta}$, $y_i\ =\ b_i^{\Bar{\theta}}$, $p\ =\ \frac{1}{\theta}$, $q\ =\ \frac{1}{\Bar{\theta}}$, and $N\ =\ I+1$,
+    \[\sum_{i=1}^{I+1}\ a_i^{\theta} b_i^{\Bar{\theta}}\ \leq\ (\sum_{i=1}^{I+1}\ a_i^{\theta \frac{1}{\theta}})^{\theta} (\sum_{i=1}^{I+1}\ b_i^{\Bar{\theta} \frac{1}{\Bar{\theta}}})^{\Bar{\theta}}\]
+    Taking the log on both sides of the inequality,
+    \[log_e[\sum_{i=1}^{I+1}\ a_i^{\theta} b_i^{\Bar{\theta}}]\ \leq\ log_e[(\sum_{i=1}^{I+1}\ a_i^{\theta \frac{1}{\theta}})^{\theta}]+log_e[(\sum_{i=1}^{I+1}\ b_i^{\Bar{\theta} \frac{1}{\Bar{\theta}}})^{\Bar{\theta}}]\]
+    \[log_e[\sum_{i=1}^{I+1}\ a_i^{\theta} b_i^{\Bar{\theta}}]\ \leq \theta log_e[\sum_{i=1}^{I+1}\ a_i]+\Bar{\theta}log_e[\sum_{i=1}^{I+1}\ b_i]\]
+    Reverting the substitutions,
+    \[log_e[\sum_{i=1}^{I+1}\ e^{x_i \theta} e^{y_i \Bar{\theta}}]\ \leq \theta log_e[\sum_{i=1}^{I+1}\ e^{x_i}]+\Bar{\theta}log_e[\sum_{i=1}^{I+1}\ e^{y_i}]\]
+    \[log_e[\sum_{i=1}^{I+1}\ e^{\theta x_i+\Bar{\theta} y_i}]\ \leq \theta log_e[\sum_{i=1}^{I+1}\ e^{x_i}]+\Bar{\theta}log_e[\sum_{i=1}^{I+1}\ e^{y_i}]\]
+    Hence,
+    \[g(\theta \Vec{x} + \Bar{\theta} \Vec{y}) \leq \theta g(\Vec{x}) + \Bar{\theta} \Vec{y}\]
+    Therefore, $g(\Vec{x})\ =\ log_e(\sum_{i=1}^I\ e^{x_i}+N_0)$ is a convex function due to which $-g(\Vec{x})\ =\ -log_e(\sum_{i=1}^I\ e^{x_i}+N_0)$ is a concave function.
+    \\Since $C_0(\Vec{P})$ is concave, the function $r-C_0(\Vec{P})$ is convex.
+    \\If a function is convex, its sub-level sets are convex.
+    \\Therefore, $\{\Vec{P}:\ r-C_0(\Vec{P}) < 0\}$ is a convex set.
+    \item The set of vectors $\Vec{x}\ =\ (r,\ P_0,\ P_1,\ ....,\ P_I)$ such that the achievable rate of user 0 is greater than $r$ is a convex set because the hypograph of a concave function is a convex set. This is shown below.
+    \[S\ \equiv\ \{(\Vec{P},\ r):\ C_0(\Vec{P}) > r\}\]
+    This is of the form,
+    \[\{(x,\ t):\ f(x) > t\}\]
+    which represents the hypograph of a concave function $f(x)$.
+    \\From the previous item, we know that, $C_0(\Vec{P})$ is a concave function.
+    \\Therefore, the set $S\ \equiv\ \{(\Vec{P},\ r):\ C_0(\Vec{P}) > r\}$ is a convex set.
+\end{enumerate}
+\subsection{Solutions to Exercise 3}
+The capacity region for two user MAC is defined as,
+\[\mathcal{R}\ \equiv\ \{(R_1,\ R_2):\ R_1<log_2(1+\frac{g_1P_1}{N}),\ R_2<log_2(1+\frac{g_2P_2}{N}),\ R_1+R_2<log_2(1+\frac{(g_1P_1 + g_2P_2)}{N})\}\]
+The set of all $(g_1,\ g_2)$ such that $(R_1,\ R_2)$ lies in $\mathcal{R}$ is a convex set because the intersection of convex sets is also a convex set. This is shown below.
+\\Let,
+\[S\ \equiv \{(g_1,\ g_2):\ R_1<log_2(1+\frac{g_1P_1}{N}),\ R_2<log_2(1+\frac{g_2P_2}{N}),\ R_1+R_2<log_2(1+\frac{(g_1P_1 + g_2P_2)}{N})\}\]
+We know that, $log_2(1+\frac{g_i P_i}{N})$ is a concave function (for $i\ =\ 1,\ 2$ in this problem).
+\\The Hessian of $f(\Vec{g})\ =\ log_2(1+\frac{g_1 P_1 + g_2 P_2}{N})$ is negative semidefinite.
+\[\triangledown^2 f(\Vec{g}) \preccurlyeq 0\]
+Therefore, $log_2(1+\frac{g_1 P_1 + g_2 P_2}{N})$ is a concave function.
+\\Now, the set $S$ can be treated as the intersection of super-level sets which are convex sets because the associated functions are concave functions.
+\\Hence, $S$ is a convex set because the intersection of convex sets is also a convex set.
+\subsection{Solutions to Exercise 3}
+\subsubsection{[Boyd] 3.5 - Running average of a convex function}
+\[F(x)\ =\ \frac{1}{x} \int_{0}^{x}\ f(t) dt\]
+$dom(F)\ =\ \mathbb{R}_{++}$ is a convex set
+\\$f(t)$ is a convex function
+\\To prove the convexity of $F(x)$, let's prove that the second order derivative is greater than or equal to 0.
+\\Mathematically, we need to prove that,
+\[\frac{d^2}{dx^2} F(x) \geq 0\]
+Using Leibnitz's rule of differentiation under the integral sign,
+\[\frac{d}{dx} F(x)\ =\ \frac{1}{x} f(x) - \frac{1}{x^2} \int_{0}^{x}\ f(t) dt\]
+\[\frac{d^2}{dx^2} F(x)\ =\ \frac{-1}{x^2} f(x) + \frac{1}{x} f^{'}(x) - \frac{1}{x^2} f(x) + \frac{2}{x^3} \int_{0}^{x}\ f(t) dt\]
+\[\frac{d^2}{dx^2} F(x)\ =\ \frac{-2}{x^2} f(x) + \frac{1}{x} f^{'}(x) + \frac{2}{x^3} \int_{0}^{x}\ f(t) dt\]
+\[\frac{d^2}{dx^2} F(x)\ =\ \frac{2}{x^3}(\int_{0}^{x}\ f(t) dt + \frac{x^2}{2} f^{'}(x) - x f(x))\]
+Now, $x f(x)$ can be written as $\int_{0}^{x}\ f(x) dt$.
+\\Furthermore, $\frac{x^2 f^{'}(x)}{2}$ can be written as $\int_{0}^{x}\ x f^{'}(x)dt - \int_{0}^{x}\ tf^{'}(x) dt$.
+\\Performing these substitutions, we get,
+\[\frac{d^2}{dx^2} F(x)\ =\ \frac{2}{x^3}(\int_{0}^{x}\ f(t) dt + \int_{0}^{x}\ x f^{'}(x)dt - \int_{0}^{x}\ tf^{'}(x) dt - \int_{0}^{x}\ f(x) dt)\]
+Taking the integral outside,
+\[\frac{d^2}{dx^2} F(x)\ =\ \frac{2}{x^3} \int_{0}^{x}\ (f(t) + x f^{'}(x) - tf^{'}(x) - f(x))dt\]
+Let's convert this to the First Order Condition form,
+\[\frac{d^2}{dx^2} F(x)\ =\ \frac{2}{x^3} \int_{0}^{x}\ (f(t) - f(x) - f^{'}(x)(t-x))dt\]
+Since, $f(x)$ is a convex function, we know it satisfies the First Order Condition, i.e.,
+\[f(t) \geq f(x) + (t-x) f^{'}(x)\]
+Therefore,
+\[\frac{d^2}{dx^2} F(x) \geq 0\]
+Hence, the running average of a convex function $F(x)$ is also a convex function.
+\subsubsection{[Boyd] 3.15(b) - Modelling effect of satiation using economic utility functions}
+\[u_\alpha\ =\ \frac{x^\alpha - 1}{\alpha}\]
+For any $0 < \alpha \leq 1$ and for any $x,\ y\ \in\ dom(u_\alpha)$ such that $x \leq y$, we have,
+\[u_\alpha(x) \leq u_\alpha(y)\]
+Therefore, $u_\alpha(x)$ is a monotonically increasing function.
+\\By inspection, for any $0 < \alpha \leq 1$,
+\[u_\alpha(1)\ =\ 0\]
+To prove the concavity of $u_\alpha$, let us prove the second order condition,
+\[\frac{d}{dx}\ u_\alpha(x)\ =\ x^{\alpha - 1}\]
+\[\frac{d^2}{dx^2}\ u_\alpha(x)\ =\ (\alpha - 1) x^{\alpha - 2}\]
+Since $0 < \alpha \leq 1$,
+\[\frac{d^2}{dx^2}\ u_\alpha(x) \leq 0\]
+Therefore, $u_\alpha(x)$ is a concave function.
+\subsubsection{[Boyd] 3.16 - Identifying convexity and/or concavity}
+\begin{enumerate}
+    \item $f(x)\ =\ e^x - 1$
+    \\$dom(f)\ =\ \mathbb{R}$ is a convex set
+    \[f^{'}(x)\ =\ e^x\]
+    \[f^{''}(x)\ =\ e^x\]
+    \[f^{''}(x) \geq 0,\ \forall x\ \in\ dom(f)\]
+    Therefore, $f(x)\ =\ e^x - 1$ is a convex function.
+    \item $f(x)\ =\ x_1 x_2$
+    \\$dom(f)\ =\ \mathbb{R}^2_{++}$ is a convex set
+    \[\triangledown^2 f(x)\ =\ \begin{bmatrix}
+    0 & 1\\
+    1 & 0
+    \end{bmatrix}\]
+    $\triangledown^2 f(x)$ is neither positive semidefinite nor negative semidefinite.
+    \\Therefore, $f(x)$ is neither convex nor concave.
+    \item $f(x)\ =\ \frac{1}{x_1 x_2}$
+    \\$dom(f)\ =\ \mathbb{R}^2_{++}$ is a convex set
+    \[\triangledown^2 f(x)\ =\ \begin{bmatrix}
+    \frac{2}{x_1^3 x_2} & \frac{1}{x_1^2 x_2^2}\\
+    \frac{1}{x_1^2 x_2^2} & \frac{2}{x_2^3 x_1}
+    \end{bmatrix}\]
+    Since $x_1,\ x_2 > 0$, the Hessian matrix above is symmetric and has positive eigenvalues.
+    \\Hence, $\triangledown^2 f(x)$ is positive definite.
+    \\Therefore, $f(x)$ is a convex function.
+    \item $f(x)\ =\ \frac{x_1}{x_2}$
+    \\$dom(f)\ =\ \mathbb{R}^2_{++}$ is a convex set
+    \[\triangledown^2 f(x)\ =\ \begin{bmatrix}
+    0 & \frac{-1}{x_2^2}\\
+    \frac{-1}{x_2^2} & \frac{2x_1}{x_2^3}
+    \end{bmatrix}\]
+    $\triangledown^2 f(x)$ is neither positive semidefinite nor negative semidefinite.
+    \\Therefore, $f(x)$ is neither convex nor concave.
+    \item $f(x)\ =\ \frac{x_1^2}{x_2}$
+    \\$dom(f)\ =\ \mathbb{R}\times\mathbb{R}_{++}$ is a convex set
+    \[\triangledown^2 f(x)\ =\ \begin{bmatrix}
+    \frac{2}{x_2} & \frac{-2x_1}{x_2^2}\\
+    \frac{-2x_1}{x_2^2} & \frac{2x_1^2}{x_2^3}
+    \end{bmatrix}\]
+    \[\triangledown^2 f(x)\ =\ \frac{2}{x_2} \begin{bmatrix}
+    1 & \frac{-x_1}{x_2}\\
+    \frac{-x_1}{x_2} & \frac{x_1^2}{x_2^2}
+    \end{bmatrix}\]
+    \\$\triangledown^2 f(x)$ is positive semidefinite because the Hessian matrix is symmetric and has non-negative eigenvalues.
+    \\Therefore, $f(x)$ is a convex function.
+    \item $f(x)\ =\ x_1^{\alpha} x_2^{1-\alpha}$
+    \\$dom(f)\ =\ \mathbb{R}^2_{++}$ is a convex set
+    \\$0 \leq \alpha \leq 1$
+    \[\triangledown^2 f(x)\ =\ \begin{bmatrix}
+    \alpha (\alpha-1) x_2^{1-\alpha} x_1^{\alpha-2} & \alpha (1-\alpha) x_1^{\alpha-1} x_2^{-\alpha}\\
+    \alpha (1-\alpha) x_1^{\alpha-1} x_2^{-\alpha} & -\alpha (1-\alpha) x_1^{\alpha} x_2^{-\alpha-1}
+    \end{bmatrix}\]
+    \[\triangledown^2 f(x)\ =\ \alpha (1-\alpha) x_1^{\alpha} x_2^{1-\alpha} \begin{bmatrix}
+    \frac{-1}{x_1^2} & \frac{1}{x_1 x_2}\\
+    \frac{1}{x_1 x_2} & \frac{-1}{x_2^2}
+    \end{bmatrix}\]
+    The Hessian above is a symmetric matrix with non-positive eigenvalues.
+    \\Therefore, $f(x)$ is a concave function.
+\end{enumerate}
+\subsubsection{[Boyd] 3.21 - Point-wise maximum and supremum}
+\begin{enumerate}
+    \item The function $f(x)\ =\ \max_{i\ =\ 1,\ 2,\ ....,\ k}\ ||A^{(i)}x-b^{(i)}||$ is a convex function due to the reasons detailed below.
+    \\We know that the norm is a convex function because it satisfies Jensen's inequality, i.e.,
+    \\For any $x,\ y\ \in\ dom(f)\ (convex)$ and for any $0 \leq \theta \leq 1$, we know from the Triangle inequality that,
+    \[||\theta x + \Bar{\theta} y|| \leq ||\theta x|| + ||\Bar{\theta} y||\]
+    \[||\theta x + \Bar{\theta} y|| \leq \theta ||x|| + \Bar{\theta} ||y||\]
+    Hence, $||x||$ is a convex function.
+    \\The affine mapping of a convex function preserves convexity.
+    \[A^{(i)}\ \in\ \mathbb{R}^{m \times n},\ b^{(i)}\ \in\ \mathbb{R}^m,\ and\ ||.||\ is\ the\ norm\ on\ \mathbb{R}^m\]
+    Therefore, $g_i(x)\ =\ ||A^{(i)}x - b^{(i)}||$ is a convex function.
+    \\Now, putting it all together,
+    \[f(x)\ =\ h(g_i(x))\ =\ \max_{i\ =\ 1,\ 2,\ ....,\ k}\ g(x_i)\]
+    Now, $\max_i\ g_i(x)$ is a convex function because the epigraph of $f(x)$ is a convex set.
+    \\Mathematically,
+    \[epi\ f\ =\ \{(x,\ t):\ t \geq \max_i\ g_i(x)\}\]
+    \[epi\ f\ =\ \bigcap_{i}\ \{(x,\ t):\ t \geq g_i(x)\}\]
+    $g_i(x)$ is a convex function. 
+    \\So, the epigraph of $g_i(x)$ is a convex set and the intersection of convex sets is another convex set.
+    \\Therefore, $f(x)\ =\ \max_{i\ =\ 1,\ 2,\ ....,\ k}\ ||A^{(i)}x-b^{(i)}||$ is a convex function.
+    \item $f(x)\ =\ \sum_{i\ =\ 1}^r\ |x|_{[i]}$ is a convex function due to reasons detailed below.
+    \\$dom(f)\ =\ \mathbb{R}^n$ is a convex set.
+    \\We know that, $|x|_{i}$ is a convex function.
+    \\Now, $f(x)$ can be written as follows.
+    \\Let, $x\ \in\ \mathbb{R}^n$ be defined as $(x_1,\ x_2,\ ....,\ x_n)$
+    \\For any $r \leq n$,
+    \[f(x)\ =\ \max_i\ |x|_{i} + \max_{i\ \neq\ i_1}\ |x|_{i} + .... + \max_{i\ \neq\ i_{r-1}}\ |x|_{i}\]
+    We know from the previous item that the $\max$ of a convex function is convex and the sum of convex functions is convex.
+    \\Therefore, $f(x)\ =\ \sum_{i\ =\ 1}^r\ |x|_{[i]}$ is a convex function.
+\end{enumerate}
+\subsubsection{[Boyd] 3.22 - Composition Rules}
+\begin{enumerate}
+    \item $f(x)\ =\ -log(-log(\sum_{i=1}^m\ e^{a_i^Tx + b_i}))$ is a convex function. The reasoning is provided below.
+    \\$dom(f)\ =\ \{x:\ \sum_{i=1}^m\ e^{a_i^{T}x+b_i} < 1\}$ is a convex set because $e^x$ is a convex function, the affine mapping of $e^x$ is a convex function, the sum of convex functions is a convex function, and the sub-level sets of a convex function are convex sets.
+    \\Let,
+    \[g(x)\ =\ log(\sum_{i=1}^m\ e^{x_i})\]
+    $g(x)$ is a convex function. Refer to the proof in subsection C of section II.
+    \\$g(a_i^Tx+b_i),\ for\ i\ =\ 1,\ 2,\ ....,\ m$, is a convex function. because affine mappings of a convex function is also a convex function.
+    \\$l(x)\ =\ \sum_{i=1}^m\ g(a_i^Tx+b_i)$ is a convex function because the sum of convex functions is also a convex function.
+    \\$-l(x)$ is a concave function.
+    \\Let,
+    \[f(x)\ =\ -log(-log(\sum_{i=1}^m\ e^{a_i^Tx + b_i}))\ =\ h(-l(x))\]
+    Now, using composition rules,
+    \\$-l(x)$ is a concave function.
+    \\$h(x)$ is a convex function and it's decreasing.
+    \\Therefore, $f(x)$ is a convex function.
+    \item $f(x,\ u,\ v)\ =\ -\sqrt{uv - x^Tx}$ is a convex function using the following rationale.
+    \[f(x,\ u,\ v)\ =\ -\sqrt{u(v - \frac{x^Tx}{u})}\]
+    $dom(f)\ =\ \{(x,\ u,\ v):\ uv > x^Tx,\ u,\ v >0\}$ is a convex set.
+    \\Using the given fact that $\frac{x^Tx}{u}$ is a convex function,
+    \\$v - \frac{x^Tx}{u}$ is a concave function
+    \\Expressing $f(x,\ u,\ v)$ to show the composition operation,
+    \[f(x,\ u,\ v)\ =\ h(g(x,\ u,\ v))\]
+    Using the given fact that $-\sqrt{x_1x_2}$ is convex on $\mathbb{R}^2_{++}$,
+    \\$h$ is convex and decreasing.
+    \\$g$ is concave.
+    \\Therefore, $f(x,\ u,\ v)$ is a convex function.
+    \item $f(x,\ u,\ v)\ =\ -log(uv - x^Tx)$ is a convex function due to the following reasoning.
+    \[f(x,\ u,\ v)\ =\ -log(uv - x^Tx)\ =\ -log(u(v-\frac{x^Tx}{u}))\ =\ -log(u) -log(v-\frac{x^Tx}{u})\]
+    $dom(f)\ =\ \{(x,\ u,\ v):\ uv > x^Tx,\ u,\ v >0\}$ is a convex set.
+    \\$v - \frac{x^Tx}{u}$ is a concave function from the previous item.
+    \\$-log(v - \frac{x^Tx}{u})$ is a convex function because for $f(x,\ u,\ v)\ =\ h(g(x,\ u,\ v))$, $h$ is convex and decreasing, and $g$ is concave.
+    \\$-log(u)$ is a convex function.
+    \\The sum of convex functions is also a convex function.
+    \\Therefore, $f(x,\ u,\ v)\ =\ -log(uv - x^Tx)$ is a convex function.
+    \item $f(x,\ t)\ =\ -(t^p - ||x||_p^p)^{\frac{1}{p}}$
+    \[dom(f)\ =\ \{(x,\ t):\ t \geq ||x||_p\}\]
+    The $dom(f)$ is a convex set because $||x||_p$ is a convex function and the epigraph of a convex function is a convex set.
+    \[f(x,\ t)\ =\ -t^{1-\frac{1}{p}}(t -\frac{||x||_p^p}{t^{p-1}})^{\frac{1}{p}}\]
+    Using the fact that $\frac{||x||p^p}{u^{p-1}}$ is convex in $(x,\ u)$ for $u > 0$,
+    \\$t -\frac{||x||_p^p}{t^{p-1}}$ is a concave function.
+    \\Using the given fact that $-x^{\frac{1}{p}} y^{1-\frac{1}{p}}$ is a convex function on $\mathbb{R}^2_{+}$, we can finally say that,
+    \\$f(x,\ t)\ =\ -(t^p - ||x||_p^p)^{\frac{1}{p}}$ is a convex function.
+    \item $f(x,\ t)\ =\ -log(t^p - ||x||_p^p)$ is a convex function based on the following rationale.
+    \[dom(f)\ =\ \{(x,\ t):\ t > ||x||_p\}\]
+    $dom(f)$ is a convex set because the epigraph of a convex function, i.e. $||x||_p$ is a convex set.
+    \[f(x,\ t)\ =\ -log(t^{p-1}(t - \frac{||x||_p^p}{t^{p-1}}))\]
+    Using the fact that $\frac{||x||_p^p}{t^{p-1}}$ is a convex function,
+    $t - \frac{||x||_p^p}{t^{p-1}}$ is a concave function.
+    \[f(x,\ t)\ =\ -log(t^{p-1})-log(t - \frac{||x||_p^p}{t^{p-1}})\]
+    \[f(x,\ t)\ =\ -(p-1)log(t)-log(t - \frac{||x||_p^p}{t^{p-1}})\]
+    Therefore, since $p > 1$, $f(x,\ t)\ =\ -log(t^p - ||x||_p^p)$ is a convex function.
+\end{enumerate}
+\end{document}
