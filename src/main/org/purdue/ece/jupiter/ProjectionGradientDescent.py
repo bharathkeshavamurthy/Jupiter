@@ -18,7 +18,7 @@ class ProjectionGradientDescent(object):
         # Initial point x_0\ =\ (0,\ 1) \in \mathcal{F}
         self.x_0 = (0, 1)
         # Default step size
-        self.default_step_size = 1
+        self.default_step_size = 0.1
         # The Line Segments
         # Use (0, 1000) to model (0, \infty) and Use (1000, 0) to model (\infty, 0)
         self.hyperplanes = [[(0, 1000), (0, 1)], [(0, 1), (0.4, 0.2)], [(0.4, 0.2), (1, 0)], [(1, 0), (1000, 0)]]
@@ -28,6 +28,8 @@ class ProjectionGradientDescent(object):
         self.function_values = []
         # Confidence Bound for Convergence
         self.confidence_bound = 10
+        # Max Iterations allowed to account for divergence when using large step sizes
+        self.max_iterations = 100000
 
     # Vector Projection Technique
     # https://en.wikipedia.org/w/index.php?title=Vector_projection&oldid=861961162#Vector_projection_2
@@ -97,7 +99,8 @@ class ProjectionGradientDescent(object):
         current_point = (0, 1)
         iteration_count = 0
         confidence = 0
-        while (confidence < self.confidence_bound) or (self.convergence_check(previous_point, current_point) is False):
+        while iteration_count < self.max_iterations and ((confidence < self.confidence_bound) and (
+                self.convergence_check(previous_point, current_point) is False)):
             if self.convergence_check(previous_point, current_point):
                 confidence += 1
             previous_point = current_point
@@ -113,7 +116,7 @@ class ProjectionGradientDescent(object):
     def visualize(self):
         fig, ax = plt.subplots()
         ax.plot(self.iterations, self.function_values, linewidth=1.0)
-        fig.suptitle('Convergence Visualization of the Projection Gradient Descent algorithm', fontsize=12)
+        fig.suptitle('Convergence Visualization of the Projection Gradient Descent Algorithm', fontsize=12)
         ax.set_xlabel('Iterations', fontsize=14)
         ax.set_ylabel('Function Value', fontsize=14)
         plt.show()
@@ -129,3 +132,4 @@ if __name__ == '__main__':
     projectionGradientDescent = ProjectionGradientDescent()
     projectionGradientDescent.optimize(None)
     projectionGradientDescent.visualize()
+    print('[INFO] ProjectionGradientDescent main: System simulation has been stopped...')
