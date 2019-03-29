@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf0e7ffd-4036-4d20-b3cc-62e07b4e56cc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/OptimalPowerAndBandwidthAllocation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/BHARATH.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/BHARATH.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DualSubgradientProjection.py" beforeDir="false" afterPath="$PROJECT_DIR$/DualSubgradientProjection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectionGradientDescent.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectionGradientDescent.py" afterDir="false" />
-    </list>
+    <list default="true" id="cf0e7ffd-4036-4d20-b3cc-62e07b4e56cc" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +12,7 @@
     <session id="1826711085">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.54" value="1" />
@@ -225,7 +220,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="1" weight="0.25297618" />
@@ -236,7 +230,7 @@
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.49925596" visible="true" weight="0.3267974" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49925596" weight="0.3267974" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.61764705" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
