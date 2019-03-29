@@ -1,0 +1,125 @@
+%\documentclass[journal]{IEEEtran}
+\documentclass[12pt, draftcls, onecolumn]{IEEEtran}
+\makeatletter
+% journal (default) and conference
+\def\subsubsection{\@startsection{subsubsection}% name
+                                 {3}% level
+                                 {\z@}% indent (formerly \parindent)
+                                 {0ex plus 0.1ex minus 0.1ex}% before skip
+                                 {0ex}% after skip
+                                 {\normalfont\normalsize\bfseries}}% style
+\makeatother
+\usepackage[T1]{fontenc}% optional T1 font encoding
+%\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage{hhline}
+\usepackage{yfonts,color}
+\usepackage{soul,xcolor}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{array}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{framed} % for frame
+\usepackage{balance} % balance
+\usepackage{epsfig,epstopdf}
+\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{subfigure}
+\usepackage{pseudocode}
+\usepackage{enumerate}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\renewcommand{\algorithmicrequire}{\textbf{Initialization:}}  % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}}  % Use Output in the format of 
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\usepackage{color}
+\usepackage{soul,xcolor}
+\newcommand{\nm}[1]{{\color{blue}\text{\bf{[NM: #1]}}}}
+\newcommand{\sst}[1]{\st{#1}}
+\newcommand{\gs}[1]{{\color{orange}\bf{[GS: #1]}}}
+\newcommand{\remove}[1]{{\color{magenta}{\bf REMOVE: [#1]}}}
+%\newcommand{\nm}[1]{}
+%\newcommand{\sst}[1]{}
+%\newcommand{\gs}[1]{}
+%\newcommand{\remove}[1]{}
+\newcommand{\add}[1]{{\color{red}{#1}}}
+\newcommand{\ull}[1]{\textbf{\color{red}\ul{#1}}}
+%\pagestyle{empty}
+\normalem
+\begin{document} 
+\setulcolor{red}
+\setul{red}{2pt}
+\title{Cross-Layer Optimization in Decentralized Cognitive Radio Networks}
+\author{Bharath Keshavamurthy and Nicol\`{o} Michelusi}
+\maketitle
+\setstcolor{red}
+\section{Primary Papers}
+The following are the two primary papers under detailed analysis.
+\begin{enumerate}
+    \item Y. Teng and M. Song, "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}," in IEEE Access, vol. 5, pp. 18692-18706, 2017.
+    \\doi: 10.1109/ACCESS.2017.2671882
+    \item A. Cammarano, F. L. Presti, G. Maselli, L. Pescosolido and C. Petrioli, "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}," in IEEE Transactions on Parallel and Distributed Systems, vol. 26, no. 9, pp. 2599-2609, 1 Sept. 2015.
+    \\doi: 10.1109/TPDS.2014.2350495
+\end{enumerate}
+\section{Our Reasons for choosing these papers}
+\begin{itemize}
+    \item Formulation of a global, joint cross-layer optimization problem for Decentralized Cognitive Radio Networks
+    \item Decomposition of this global joint cross-layer optimization problem into inter-twined sub-problems using Standard Lagrangian Duality Theory
+    \item Solving the optimization objectives using Vertical Decomposition, Sub-Gradient methods, and Heuristic algorithms
+    \item Check for Karush-Kuhn-Tucker conditions of optimality and arrive at a variant of the Water-Filling Solution for Optimal Power Allocation \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]}, Stable-Path Routing for Route Selection \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]}, Maximal Differential Back-Pressure Link Scheduling \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]} for Flow Scheduling, etc.
+    \item Understand the applications of Convex Optimization in a fully-integrated PHY [MCS-Adaptation and Power Allocation], MAC [Channel Allocation/Access strategies], Scheduling, Routing, and Congestion Control stack for Distributed Cognitive Radio Networks
+    \item Explore possible incorporation of novel strategies extracted and extended from these works into the DARPA SC2 BAM-Wireless Radio Node Design
+\end{itemize}
+\section{Focus of our investigation}
+\begin{itemize}
+    \item The Generalized Utility Optimization Problem (GUOP) in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]} and its solutions using Vertical Decomposition and Heuristic algorithms - Analyzing the optimalities of decoupled and distributed solutions to a global, integrated optimization problem
+    \item The Network Utility Maximization (NUM) problem formulated in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]} and its solutions using Lagrangian Dual Decomposition and Sub-Gradient methods - Analyzing the optimalities of decoupled and distributed solutions to a global, integrated optimization problem
+    \item Analysis of the simulations and bench-markings detailed in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]} and \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]} and validating the theoretical claims made in these works
+\end{itemize}
+\section{Facets of Comparison}
+\begin{itemize}
+    \item Assumptions (mild and strong) made in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]} and \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]} and how the solutions would be affected if the assumptions were loosened or removed altogether
+    \item Differences in System Model (Deployment Model, Traffic Model, Interference Model, and Observation Model) between the two works
+    \item Problem Formulations [with constraints] - Generalized Utility Optimization Problem (GUOP) in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]} and Network Utility Maximization Problem (NUM) in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]}
+    \item Analyze if the 3-layer solution in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]} encapsulates all the necessary components of Cross-Layer Optimization in Distributed Cognitive Radio Networks or if we need a 5-layer solution as detailed in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]}
+    \item Approaches to decomposition of the global optimization problem into sub-problems in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]} and \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]} using Lagrangian Duality Theory
+    \item Approaches to arrive at the optimal solution, Convergence check of the proposed algorithms, and Check for global optimality of the overall integrated optimization problem
+    \item Evaluation of simulation parameters, environments, and results detailed in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]} - MATLAB and \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]} - NS2 MIRACLE
+\end{itemize}
+\clearpage
+\section{Extension to the ECE64700 Project}
+\begin{itemize}
+    \item Replication of the results outlined in \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{[\textcolor{blue}{1}]} and \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{[\textcolor{blue}{2}]}
+    \item Possible Extensions - No CSI, No prior PU Occupancy Behavior information, Non-Orthogonal channels, Approximations and Heuristics to reduce the computational complexity
+    \item Explore possible incorporation of the network protocol stack solution arrived at by solving the global optimization problem into the DARPA SC2 BAM-Wireless radio node design
+\end{itemize}
+\section{Related Papers}
+The following are the related papers under condensed analysis in order to understand the mathematical theory behind the ideas in the primary papers, fill in the necessary gaps, and understand design and deployment constraints of the cross-layer framework.
+\begin{itemize}
+    \item G. Sklivanitis et al., "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8416696&isnumber=8274985}{\textcolor{blue}{Airborne Cognitive Networking: Design, Development, and Deployment}}," in IEEE Access, vol. 6, pp. 47217-47239, 2018.
+    \\doi: 10.1109/ACCESS.2018.2857843
+    \item Xiaojun Lin, N. B. Shroff and R. Srikant, "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1665000&isnumber=34851}{\textcolor{blue}{A tutorial on cross-layer optimization in wireless networks}}," in IEEE Journal on Selected Areas in Communications, vol. 24, no. 8, pp. 1452-1463, Aug. 2006.
+    \\doi: 10.1109/JSAC.2006.879351
+    \item M. Chiang, S. H. Low, A. R. Calderbank and J. C. Doyle, "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4118456&isnumber=4118453}{\textcolor{blue}{Layering as Optimization Decomposition: A Mathematical Theory of Network Architectures}}," in Proceedings of the IEEE, vol. 95, no. 1, pp. 255-312, Jan. 2007.
+    \\doi: 10.1109/JPROC.2006.887322
+\end{itemize}
+\end{document}

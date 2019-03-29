@@ -1,0 +1,105 @@
+%\documentclass[journal]{IEEEtran}
+\documentclass[12pt, draftcls, onecolumn]{IEEEtran}
+\makeatletter
+% journal (default) and conference
+\def\subsubsection{\@startsection{subsubsection}% name
+                                 {3}% level
+                                 {\z@}% indent (formerly \parindent)
+                                 {0ex plus 0.1ex minus 0.1ex}% before skip
+                                 {0ex}% after skip
+                                 {\normalfont\normalsize\bfseries}}% style
+\makeatother
+\usepackage[T1]{fontenc}% optional T1 font encoding
+%\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{ulem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage{hhline}
+\usepackage{yfonts,color}
+\usepackage{soul,xcolor}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{array}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{framed} % for frame
+\usepackage{balance} % balance
+\usepackage{epsfig,epstopdf}
+\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{subfigure}
+\usepackage{pseudocode}
+\usepackage{enumerate}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\renewcommand{\algorithmicrequire}{\textbf{Initialization:}}  % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}}  % Use Output in the format of 
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\usepackage{color}
+\usepackage{soul,xcolor}
+\newcommand{\nm}[1]{{\color{blue}\text{\bf{[NM: #1]}}}}
+\newcommand{\sst}[1]{\st{#1}}
+\newcommand{\gs}[1]{{\color{orange}\bf{[GS: #1]}}}
+\newcommand{\remove}[1]{{\color{magenta}{\bf REMOVE: [#1]}}}
+%\newcommand{\nm}[1]{}
+%\newcommand{\sst}[1]{}
+%\newcommand{\gs}[1]{}
+%\newcommand{\remove}[1]{}
+\newcommand{\add}[1]{{\color{red}{#1}}}
+\newcommand{\ull}[1]{\textbf{\color{red}\ul{#1}}}
+%\pagestyle{empty}
+\normalem
+\begin{document}
+\title{Cross-Layer Optimization in Decentralized Cognitive Radio Networks}
+\author{Bharath Keshavamurthy}
+\maketitle
+\section{Project Proposal: Plan and Methodology}
+The proposal is to primarily simulate existing work (Section \ref{IV}) in the domain of cross-layer optimization for decentralized/distributed cognitive radio networks while also providing a few extensions in terms of additional constraints or additional sub-problems which may lead to the exploration of different techniques to solve the extended problem.
+\\\textbf{What do I plan to accomplish? What would be my methodology?}
+\begin{itemize}
+    \item Keeping the QoS requirement as \underline{Maximizing the SU Network Throughput}, formulate a cross-layer optimization problem including design considerations across all 5 layers of the protocol stack (APP, Transport, Network, MAC, and PHY) \textbf{with some novel extensions which are discussed in Section \ref{II}}
+    \item Solve the formulated cross-layer optimization problem using techniques from Lagrangian Duality Theory, well-known Iterative Algorithms (such as Descent Methods and Gradient Projection using Sub-Gradients), and other heuristic approaches
+    \item Construct an algorithm or a set of algorithms that efficiently solve the formulated cross-layer optimization problem
+    \item Implement the constructed algorithm and \textbf{simulate possible real-world scenarios} [real-time traffic flows (prioritized) and non-real time traffic flows in the SU network co-existing with a licensed user (PU)] in NS2 or MATLAB
+\end{itemize}
+\section{Novel Extensions}\label{II}
+\textbf{What would be novel in my approach to cross-layer optimization as opposed to related work in this arena? What are the aspects I will be focusing on?}
+\begin{itemize}
+    \item \underline{PU Occupancy Behavior is not known to the SUs} - Learn this over time by assuming a Markovian Correlation in PU spectrum access behavior and then share a condensed version of this information over a common control channel to all the SUs - Incorporate this into the MAC layer in the SU Network Protocol Stack
+    \item \underline{Incorporating MCS Adaptation into the PHY layer problem} - Does this lead to a different sub-problem or just a new constraint in the global optimization problem?
+    \item \underline{Prioritized Flow Scheduling} - How does adding prioritized flows impact the flow scheduling problem? Can we have Priority Queueing System at the nodes or can we have a Weighted Back-Pressure Scheduler at the nodes?
+    \item \underline{Additional Routing Metrics} - Adding new constraints to the routing sub-problem (Network Layer) to take into account other relevant routing costs such as Routing Delay and the Quality of the Route (capacity and reliability of the links involved)
+\end{itemize}
+\section{Deliverables}
+\textbf{What do I plan to deliver?}
+\begin{itemize}
+    \item A consolidated cross-layer optimization problem formulation incorporating MCS Adaptation (PHY), Power Allocation (PHY), Spectrum Access (MAC), Routing (NET), and Flow Scheduling (TRANSPORT) with SU Network Throughput constraints (QoS - APP) for the extended problem (Section \ref{II})
+    \item An algorithm or a set of algorithms with variables flowing amongst them, solving this extended cross-layer optimization problem, included in the SU's network protocol stack
+    \item \underline{MATLAB or NS2 deliverables} - Constructing a topology of SUs in a licensed user's interference region, generating real-time streaming and non-real time generic traffic flows to the SUs, and visualizing plots of \textit{PU Packet Error Rate v/s PU Load} and \textit{SU Network Throughput for the offered traffic}.
+\end{itemize}
+\section{Related Work}\label{IV}
+The following are the papers I will be referring to OR extending from for my project. 
+\begin{enumerate}
+    \item "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}"
+    \item "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}"
+    \item \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1665000&isnumber=34851}{\textcolor{blue}{A tutorial on cross-layer optimization in wireless networks}}"
+    \item \href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=4118456&isnumber=4118453}{\textcolor{blue}{Layering as Optimization Decomposition: A Mathematical Theory of Network Architectures}}"
+\end{enumerate}
+The same papers are studied as a part of my ECE64700 Paper Summary.
+\end{document}
