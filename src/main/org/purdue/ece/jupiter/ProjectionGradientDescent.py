@@ -27,9 +27,9 @@ class ProjectionGradientDescent(object):
         # Function values array which models the y-axis of the convergence plot
         self.function_values = []
         # Confidence Bound for Convergence
-        self.confidence_bound = 10
+        self.confidence_bound = 1
         # Max Iterations allowed to account for divergence when using large step sizes
-        self.max_iterations = 100000
+        self.max_iterations = 10
 
     # Vector Projection Technique
     # https://en.wikipedia.org/w/index.php?title=Vector_projection&oldid=861961162#Vector_projection_2
@@ -115,7 +115,7 @@ class ProjectionGradientDescent(object):
     # Visualize the convergence or divergence of the algorithm with respect to varying step sizes
     def visualize(self):
         fig, ax = plt.subplots()
-        ax.plot(self.iterations, self.function_values, linewidth=1.0)
+        ax.plot(self.iterations, self.function_values, linewidth=1.0, marker='o', color='b')
         fig.suptitle('Convergence Visualization of the Projection Gradient Descent Algorithm', fontsize=12)
         ax.set_xlabel('Iterations', fontsize=14)
         ax.set_ylabel('Function Value', fontsize=14)
