@@ -21,7 +21,7 @@ class ProjectionGradientDescent(object):
         self.default_step_size = 0.1
         # The Line Segments
         # Use (0, 1000) to model (0, \infty) and Use (1000, 0) to model (\infty, 0)
-        self.hyperplanes = [[(0, 1000), (0, 1)], [(0, 1), (0.4, 0.2)], [(0.4, 0.2), (1, 0)], [(1, 0), (1000, 0)]]
+        self.line_segments = [[(0, 1000), (0, 1)], [(0, 1), (0.4, 0.2)], [(0.4, 0.2), (1, 0)], [(1, 0), (1000, 0)]]
         # Iterations array which models the x-axis of the convergence plot
         self.iterations = []
         # Function values array which models the y-axis of the convergence plot
@@ -29,14 +29,14 @@ class ProjectionGradientDescent(object):
         # Confidence Bound for Convergence
         self.confidence_bound = 1
         # Max Iterations allowed to account for divergence when using large step sizes
-        self.max_iterations = 10
+        self.max_iterations = 1000
 
     # Vector Projection Technique
     # https://en.wikipedia.org/w/index.php?title=Vector_projection&oldid=861961162#Vector_projection_2
     @staticmethod
-    def vector_projection(point, hyperplane):
-        x1, y1 = hyperplane[0]
-        x2, y2 = hyperplane[1]
+    def vector_projection(point, line_segment):
+        x1, y1 = line_segment[0]
+        x2, y2 = line_segment[1]
         x, y = point
         projection_go_ahead = False
         # TODO: Change this to simpler existence check in the polyhedron
@@ -70,9 +70,9 @@ class ProjectionGradientDescent(object):
         # Some random high distance for comparison
         min_distance = 10000
         projected_point = None
-        # Iterate through all the hyperplanes making up the feasible set
-        for hyperplane in self.hyperplanes:
-            distance, closest_point = self.vector_projection(oob_point, hyperplane)
+        # Iterate through all the line segments making up the feasible set
+        for line_segment in self.line_segments:
+            distance, closest_point = self.vector_projection(oob_point, line_segment)
             if distance < min_distance:
                 min_distance = distance
                 projected_point = closest_point
@@ -96,7 +96,7 @@ class ProjectionGradientDescent(object):
         # Previous point
         previous_point = None
         # Current point
-        current_point = (0, 1)
+        current_point = self.x_0
         iteration_count = 0
         confidence = 0
         while iteration_count < self.max_iterations and ((confidence < self.confidence_bound) and (

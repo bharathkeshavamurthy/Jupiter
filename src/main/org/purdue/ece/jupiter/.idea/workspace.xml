@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cf0e7ffd-4036-4d20-b3cc-62e07b4e56cc" name="Default Changelist" comment="" />
+    <list default="true" id="cf0e7ffd-4036-4d20-b3cc-62e07b4e56cc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../../latex/pdf/ECE647_Paper_Summary_Plan.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../latex/src-zip/ECE647_Paper_Summary_Plan.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../latex/src/ECE647_Paper_Summary_Plan/main.tex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectionGradientDescent.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectionGradientDescent.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,52 +18,39 @@
     <session id="1826711085">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.26" value="1" />
           <entry key="project.open.time.35" value="1" />
           <entry key="project.open.time.54" value="1" />
-          <entry key="project.opened" value="3" />
+          <entry key="project.open.time.75" value="1" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="20" />
+          <entry key="py" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="20" />
+          <entry key="Python" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="15367" />
+          <entry key="py" value="15442" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="15367" />
+          <entry key="Python" value="15442" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/OptimalPowerAndBandwidthAllocation.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="40" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="40" />
-              <folding>
-                <element signature="e#323#341#0" expanded="true" />
-                <marker date="1553822841354" expanded="true" signature="672:673" ph="..." />
-                <marker date="1553822841354" expanded="true" signature="672:712" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -70,6 +63,8 @@
     <findStrings>
       <find>[</find>
       <find>self.alphas[receiver] * self.betas[receiver]</find>
+      <find>hyperplane</find>
+      <find>hyperplanes</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -78,9 +73,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ProjectionGradientDescent.py" />
         <option value="$PROJECT_DIR$/DualSubgradientProjection.py" />
         <option value="$PROJECT_DIR$/OptimalPowerAndBandwidthAllocation.py" />
+        <option value="$PROJECT_DIR$/ProjectionGradientDescent.py" />
       </list>
     </option>
   </component>
@@ -98,6 +93,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,7 +105,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -128,7 +123,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.OptimalPowerAndBandwidthAllocation">
+  <component name="RunManager" selected="Python.ProjectionGradientDescent">
     <configuration name="DualSubgradientProjection" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="jupiter" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -199,9 +194,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.ProjectionGradientDescent" />
         <item itemvalue="Python.OptimalPowerAndBandwidthAllocation" />
         <item itemvalue="Python.DualSubgradientProjection" />
-        <item itemvalue="Python.ProjectionGradientDescent" />
       </list>
     </recent_temporary>
   </component>
@@ -249,8 +244,8 @@
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49925596" weight="0.3267974" />
-      <window_info active="true" anchor="bottom" id="Debug" order="7" visible="true" weight="0.61764705" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.49925596" visible="true" weight="0.3267974" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.61764705" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="10" />
@@ -323,27 +318,10 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ProjectionGradientDescent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="122" lean-forward="true" selection-start-line="122" selection-end-line="122" />
-          <folding>
-            <marker date="1553734531817" expanded="true" signature="637:638" ph="..." />
-            <marker date="1553734531817" expanded="true" signature="637:673" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DualSubgradientProjection.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1955">
           <caret line="115" column="26" lean-forward="true" selection-start-line="115" selection-start-column="26" selection-end-line="115" selection-end-column="26" />
-          <folding>
-            <element signature="e#264#276#0" expanded="true" />
-            <marker date="1553784159451" expanded="true" signature="507:508" ph="..." />
-            <marker date="1553784159451" expanded="true" signature="1669:1938" ph="..." />
-            <marker date="1553784159451" expanded="true" signature="2020:2025" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -361,12 +339,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ProjectionGradientDescent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/OptimalPowerAndBandwidthAllocation.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="40" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="40" />
+        <state relative-caret-position="289">
+          <caret line="23" column="43" lean-forward="true" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
           <folding>
-            <element signature="e#323#341#0" expanded="true" />
             <marker date="1553822841354" expanded="true" signature="672:673" ph="..." />
             <marker date="1553822841354" expanded="true" signature="672:712" ph="..." />
           </folding>

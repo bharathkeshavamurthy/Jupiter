@@ -1,0 +1,600 @@
+%\documentclass[journal]{IEEEtran}
+\documentclass[12pt, draftcls, onecolumn]{IEEEtran}
+\makeatletter
+% journal (default) and conference
+\def\subsubsection{\@startsection{subsubsection}% name
+                                 {3}% level
+                                 {\z@}% indent (formerly \parindent)
+                                 {0ex plus 0.1ex minus 0.1ex}% before skip
+                                 {0ex}% after skip
+                                 {\normalfont\normalsize\bfseries}}% style
+\makeatother
+\usepackage[T1]{fontenc}% optional T1 font encoding
+%\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{ulem}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\allowdisplaybreaks
+\usepackage{hhline}
+\usepackage{yfonts,color}
+\usepackage{soul,xcolor}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\allowdisplaybreaks
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{array}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{framed} % for frame
+\usepackage{balance} % balance
+\usepackage{epsfig,epstopdf}
+\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{subfigure}
+\usepackage{pseudocode}
+\usepackage{enumerate}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\renewcommand{\algorithmicrequire}{\textbf{Initialization:}}  % Use Input in the format of Algorithm
+\renewcommand{\algorithmicensure}{\textbf{Output:}}  % Use Output in the format of 
+\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\usepackage{color}
+\usepackage{soul,xcolor}
+\newcommand{\nm}[1]{{\color{blue}\text{\bf{[NM: #1]}}}}
+\newcommand{\sst}[1]{\st{#1}}
+\newcommand{\gs}[1]{{\color{orange}\bf{[GS: #1]}}}
+\newcommand{\remove}[1]{{\color{magenta}{\bf REMOVE: [#1]}}}
+%\newcommand{\nm}[1]{}
+%\newcommand{\sst}[1]{}
+%\newcommand{\gs}[1]{}
+%\newcommand{\remove}[1]{}
+\newcommand{\add}[1]{{\color{red}{#1}}}
+\newcommand{\ull}[1]{\textbf{\color{red}\ul{#1}}}
+%\pagestyle{empty}
+\normalem
+\begin{document} 
+\setulcolor{red}
+\setul{red}{2pt}
+\title{Cross-Layer Optimization in Decentralized Cognitive Radio Networks}
+\author{Bharath Keshavamurthy}
+\maketitle
+\setstcolor{red}
+\begin{abstract}
+In the cognitive radio networks paradigm, unlicensed users termed as Secondary Users (SUs) need to learn to co-exist with licensed users termed as Primary Users (PUs) while ensuring strict non-interference with the incumbent transmissions and at the same time provide certain QoS guarantees such as maximum allowed latency and minimum sustained throughput requirements for the flows allotted to them. In this regard, the design of the SU network stack is influenced by the spectrum access protocols implemented in the MAC layer. However, pure divide-and-conquer strategies such as developing and incorporating a new MAC layer scheme for channel access while leaving the conventional network protocols in the other layers of the SU stack untouched do not work due to the various dependencies across all the layers of the stack. Considering this, the authors of the papers under analysis present a cross-layer optimization framework that captures the design novelty and inter-layer dependence needed in order to tackle the additional requirement of co-existence with incumbents and the other cognitive radio nodes. The authors take the convex optimization route to solve for the optimal protocols to be employed in the various layers of the SU network stack - formulate a utility maximization problem with numerous constraints that capture the QoS requirements, power allocation restrictions, flow rate requirements, non-interference compliance, and routing limitations; decouple the global, integrated, cross-layer optimization problem using decomposition techniques; and solve these decoupled sub-problems using tools from standard Lagrangian duality theory, descent methods, and custom heuristic algorithms.
+\end{abstract}
+\newpage
+%%%%%%%%%% Introduction %%%%%%%%%%
+\section{Objectives and contributions}
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}"}
+The objective of this paper is to develop joint flow control, routing, spectrum allocation, and transmission power control techniques for Secondary Users in decentralized cognitive radio networks with QoS guarantees. This paper presents a five-layer optimization strategy for the design of the SU network protocol stack in Cognitive Radio Ad-Hoc Networks (CRAHNs) otherwise known as decentralized cognitive radio networks.
+\\The main contributions of this paper are detailed below:
+\begin{itemize}
+    \item Formulate a Generalized Utility maximization Optimization Problem (GUOP) with constraints that capture all the critical design aspects of the SU network protocol stack such as transmission power control, spectrum access, route selection, and flow control - all these aspects are designed keeping the QoS requirements guaranteed by services in the application layer
+    \item Fragment this complex, joint, cross-layer optimization problem into three sub-problems (one for optimal channel allocation and power control, another for route selection, and finally, another one for flow control) using Vertical Decomposition techniques.
+    \item The sub-problems are then solved using standard convex optimization techniques which include Lagrangian \& dual formulations and sub-gradient projection.
+    \item A heuristic approach termed as Cross-Layer Optimization design through a Heuristic Algorithm (COHA) (arrived at by employing verification of KKT conditions) to solve the cross-layer optimization problem in order to reduce the computational complexity encountered by the standard solution form.
+    \item Simulations detailing the performance of the standard techniques, the proposed novel COHA approach, and comparisons between the two schemes
+\end{itemize}
+\clearpage
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}"}
+The objective of this paper is to devise a distributed solution for addressing the problem of joint media access control, i.e. spectrum allocation, flow scheduling, and flow routing in decentralized cognitive radio networks with the goal of maximizing the throughput of end-to-end flows between peer nodes.
+\\The main contributions of this paper are detailed below.
+\begin{itemize}
+    \item Formulate a Network Utility Maximization (NUM) problem in order to devise a distributed, integrated MAC, flow-scheduling, flow-routing, and congestion control protocol stack for Secondary Users (SUs) in decentralized cognitive radio networks
+    \item Decompose the global cross-layer optimization problem into several sub-problems and then solve them using standard Lagrangian duality theory
+    \item The distributed solutions to the global cross-layer optimization problem are treated as network protocols in the SU protocol stack design and the subsequent ns2-MIRACLE based performance evaluations of these solutions reveal a high spectrum utilization achieved by the SU peer nodes while limiting increase in packet error rates for the incumbent to below one percent.
+    \item The nodes in the implementation architecture outlined in this paper do not perform any explicit optimization. Instead, by locally executing the Network Protocols arrived at theoretically, which include the queue differential back-pressure scheduler and the modified CSMA algorithm at the nodes, the SU network achieves the QoS requirements guaranteed by the services in the application layer, i.e. the minimum throughput requirements for the multi-hop flows while ensuring that the interference with the licensed user is kept to a minimum.
+    \item Also, the system architecture relies on the SUs exchanging their queue lengths and their knowledge of the Primary User occupancy behavior over a common control channel.
+\end{itemize}
+\clearpage
+\section{Model, approaches, and main results}
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}"}
+\subsubsection{Cross-Layer Optimization Problem Formulation}
+Based on the system model detailed in the appendix of this document, the authors formulate the global, integrated, cross-layer optimization problem as shown below.
+\\The objective function is framed as,
+\begin{equation}
+    argmin_{P^*,\ T^*,\ R^*,\ G^*}\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \frac{r_{i,l}^{s_k}}{\epsilon_{i,l}^{s_k}}
+\end{equation}
+where, $\epsilon_{i,l}^{s_k}$ is the flow rate transportable over each link $l$ which is defined as,
+\[\epsilon_{i,l}^{s_k}\ \triangleq\ \sum_{n \in \mathcal{N}}\ g_{n,i,l}^{s_k} K_{f_n}(t)\]
+where, $K_{f_n}(t)$ is defined as the stability factor of channel $f_n$.
+\\And, the constraints obtained from the system model are,
+\\The Minimum Rate Requirement (MRR) QoS constraint:
+\[\sum_{n \in \mathcal{N}}\ r_{i,l}^{s_k} g_{n,i,+/-,l}^{s_k} \geq R_{min}^{s_k},\ \forall r_{i,l}^{s_k}\ \not=\ 0\]
+The node balance constraints for the flow rates:
+\[g_{n,i,-,l}^{s_k} \leq g_{n,i,+,l}^{s_k}\]
+The non-negative constraint for the flow rates:
+\[g_{n,i,-,l}^{s_k} \geq 0,\ g_{n,i,+,l}^{s_k} \geq 0\]
+The capacity constraint:
+\[x_{n,i,l}^{s_k} \geq max\{g_{n,i,+,l}^{s_k},\ g_{n,i,-,l}^{s_k}\}\]
+The prevention of cyclic paths during routing at the network layer constraint:
+\[r_{i,l}^{s_k} \in \{0,\ 1,\ -1\},\ \sum_{l}\ |r_{i,l}^{s_k}| \leq 1\]
+The PU non-interference constraint:
+\[t_p(f_n) T_{i,l}(f_n)\ \not=\ 1\]
+The co-channel non-interference among SUs constraint:
+\[\sum_{i}\ \sum_{l}\ T_i(f_n) \in \{0,\ 1\}\]
+The maximum available power constraint:
+\[\sum_{s_k}\ \sum_{l}\ \sum_{n}\ P_{n,i,l}^{s_k} \leq P_i^C\]
+The non-negative power constraint:
+\[P_{n,i,l}^{s_k} \geq 0\]
+$P^*,\ G^*,\ T^*$, and $R^*$ represent the system solution for optimal power allocation, optimal flow control, optimal spectrum allocation, and optimal routing in the SU network protocol stack.
+\\There is a mix of continuous and discrete constraints in this global, integrated, cross-layer optimization problem which makes solving it a lot harder. So, the authors set out to make the discrete constraints continuous as shown below.
+\\The prevention of cyclic paths in routing constraint can be made continuous as shown below:
+\[r_{i,l}^{s_k} \in [-1,\ 1]\]
+And, \[\sum_l\ (r_{i,l}^{s_k})^2 \leq 1\]
+The PU non-interference constraint and the co-channel non-interference constraint can be combined and made continuous as shown below:
+\[T_{i,l}(f_n) \in [0,\ 1]\]
+And, \[t_p(f_n)\sum_i\ \sum_l\ T_{i,l}(f_n) \leq 1\]
+\subsubsection{Cross-Layer Optimization through Vertical Decomposition (COVD)}
+Let's write the Lagrangian as follows,
+\begin{equation}
+    \begin{aligned}
+        \mathcal{L}\ =\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \frac{r_{i,l}^{s_k}}{\sum_{n}\ g_{n,i,+/-,l} K_{f_n}(t)} - \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \alpha_{i,l}^{s_k}(r_{i,l}^{s_k}\sum_n\ g_{n,i,+/-,l}^{s_k} - R_{min}^{s_k}) - \\\sum_{s_k}\ \sum_{i}\ \sum_{l}\ \sum_{n}\ \beta_{n,i,l}^{s_k}(g_{n,i,+,l}^{s_k} - g_{n,i,-,l}^{s_k}) - \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \sum_n\ \chi_{n,i,l}^{s_k}(x_{n,i,l}^{s_k} - max\{g_{n,i,-,l}^{s_k},\ g_{n,i,+,l}^{s_k}\}) + \\\sum_{s_k}\ \sum_{i}\ \delta_i^{s_k}(\sum_l\ (r_{i,l}^{s_k})^2 - 1) + \sum_i\ \epsilon_i(\sum_{s_k}\ \sum_l\ \sum_n\ P_{n,i,l}^{s_k} - P_i^C) + \sum_n\ \phi_n(t_p(f_n) \sum_i\ \sum_l\ T_{i,l}(f_n) - 1)
+    \end{aligned}
+\end{equation}
+Decomposing the above equation to decouple the unrelated constraints, we get the joint flow control and routing problem with the MRR QoS constraints as depicted by equation (\ref{6}) and a joint spectrum allocation and power allocation problem as depicted by equation (\ref{7}), both of which are detailed in section \ref{V} of this document.
+Solving for the  optimal power allocation solution, the authors arrive at,
+\[P_{n,i,l}^{s_k}\ =\ \Big[\frac{\chi_{n,i,l}^{s_k} t_p(f_n) T_{i,l}(f_n) b_n}{ln2\ \epsilon_i} - \frac{\Gamma \sigma^2}{|h_{n,i,l}|^2}\Big]^+\]
+And, solving for optimal spectrum allocation solution, the authors arrive at,
+\begin{equation*}
+    T_{i,l}(f_n)\ =\ 
+    \begin{cases}
+        1, & \text{if}\ argmax\ \chi_{n,i,l}^{s_k} b_n log_2\Big(\frac{1+|h_{n,i,l}|^2 P_{n,i,l}^{s_k}}{\Gamma \sigma^2}\Big)\\
+        0, & \text{otherwise}
+    \end{cases}
+\end{equation*}
+Solving for the route selection optimality at the network layer, the authors arrive at,
+\begin{equation*}
+    r_{i,l}^{s_k}\ =\ 
+    \begin{cases}
+        -1, & \text{if}\ l\ =\ argmax\ \sum_n\ (g_{n,i,-,l}^{s_k} K_{f_n}(t))\\
+        1, & \text{if}\ l\ =\ argmax\ \sum_n\ (g_{n,i,+,l}^{s_k} K_{f_n}(t))\\
+        0, & \text{otherwise}
+    \end{cases}
+\end{equation*}
+This solution tells us to choose the most stable paths (contained in the stability metric $K_{f_n}(t)$) instead of minimum hop routing.
+\\Next, solving for the flow control optimality, the authors arrive at the following algorithmic steps.
+The dual factor $\chi_{n,i,l}^{s_k}$ is updated in a outer loop using the sub-gradient projection method as follows.
+\[\chi_{n,i,l}^{s_k}(u+1)\ =\ [\chi_{n,i,l}^{s_k}(u) + s^u(x_{n,i,l}^{s_k} - max\{g_{n,i,-,l}^{s_k},\ g_{n,i,+,l}^{s_k}\}]^+\]
+where, $u$ is the iteration index and $s^u$ is the step-size.
+\\The local Lagrangian multiplier $\alpha_{i,l}^{s_k}$ is solved using sub-gradient projection as shown below.
+\[\alpha_{i,l}^{s_k}(v+1)\ =\ [\alpha_{i,l}^{s_k}(v) + s^v \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \alpha_{i,l}^{s_k}(r_{i,l}^{s_k}\sum_n\ g_{n,i,+/-,l}^{s_k} - R_{min}^{s_k})]^+\]
+The local Lagrangian multiplier $\beta_{n,i,l}^{s_k}$ is solved using sub-gradient projection as shown below.
+\[\beta_{n,i,l}^{s_k}(v+1)\ =\ [\beta_{n,i,l}^{s_k}(v) + s^v \sum_n\ g_{n,i,+/-,l}^{s_k}]^+\]
+Using these updated global and local Lagrangian multipliers, we can write the solution for the flow rate as follows.
+\begin{equation*}
+    g_{n,i,+/-,l}^{s_k}\ =\ 
+    \begin{cases}
+        s^v[U_{i,l}' + (\chi_{n,i,l}^{s_k} \mp \beta_{n,i,l}^{s_k})], & \text{if}\ i \in \mathcal{I}\setminus\{a_k,\ d_k\}\\
+        s^v[U_{i,l}' - \alpha_{i,l}^{s_k} r_{i,l}^{s_k} + (\chi_{n,i,l}^{s_k} \mp \beta_{n,i,l}^{s_k})], & \text{if}\ i \in \{a_k,\ d_k\}
+    \end{cases}
+\end{equation*}
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}"}
+\subsubsection{Cross-Layer Optimization Problem Formulation}
+The three critical aspects of CRAHN SU Network Protocol Stack Design laid down in this work are:
+\begin{itemize}
+    \item Flow Scheduling
+    \item Rate Control
+    \item MAC Protocol
+\end{itemize}
+Based on the system models detailed in the appendix of this document, the global, cross-layer optimization problem in order to solve for optimal solutions to the three critical aspects enumerated earlier is given below.
+\begin{equation}
+    max\ \sum_{f \in \mathcal{F}}\ U_f(x_f)
+\end{equation}
+such that,
+\\The node-balance constraints for the flow rates:
+\[x_f + \sum_{l \in \mathcal{L}_i(n)}s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}s_{fl},\ n=s(f),\ f \in \mathcal{F}\]
+\[\sum_{l \in \mathcal{L}_i(n)}s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}s_{fl},\ n \not=\ s(f),\ d(f),\ f \in \mathcal{F}\]
+The interference/conflicts constraints:
+\[p_I \geq 0,\ and\ \sum_{I \in \mathcal{I}}\ p_I\ =\ 1,\ I \in \mathcal{I}\]
+The combined flow rate over link $l$ is equal to its average transmission rate:
+\[\sum_{f \in \mathcal{F}}\ s_{fl}\ =\ \sum_{I \in \mathcal{I}}\ p_I a_{Il},\ l \in \mathcal{L}\]
+The average link transmission rate is upper bounded by the occupancy behavior of the PU, i.e. the fraction of time the link $l$ is occupied by the PU:
+\[\sum_{I \in \mathcal{I}} p_I a_{Il} \leq \alpha_l,\ l \in \mathcal{L}\]
+\subsubsection{The SU Network Protocol Stack Solution}
+The optimization problem was defined in the previous subsection. Let's use Lagrangian duality theory to arrive at solutions for rate control, flow scheduling, and MAC protocol design.
+\[D(q,\ w)\ =\ max_{p,\ s,\ x}\ \mathcal{L}(p,\ s,\ x,\ q,\ w)\]
+This is formulated as follows based on the Problem Formulation and the  System Model described in the previous subsections.
+\begin{equation}
+    \begin{aligned}
+        max_{p,\ s,\ x}\ \sum_{f \in \mathcal\mathcal{F}}\ \sum_{f \in \mathcal{F}}\ (U_f(x_f) - q_s(f)x_f) - \frac{1}{\beta}\sum_{I \in \mathcal{I}}\ p_I log p_I + \sum_{l}\ \sum_{f}\ s_{fl}(q_{h(l)f} - q_{t(l)f}) - \\\sum_{l}\ w_l(\sum_{I \in \mathcal{I}}\ p_I a_{Il} + \epsilon - \alpha_l)
+    \end{aligned}
+\end{equation}
+where, $\epsilon$ is a small quantity added to change the inequality constraint $\sum_{I \in \mathcal{I}} p_I a_{Il} \leq \alpha_l,\ l \in \mathcal{L}$ into an equality constraint and $\beta$ is a large constant added to the objective function so that $\frac{1}{\beta} \rightarrow 0$.
+\\The approach taken by the authors to solve this problem formulation is as follows:
+\begin{itemize}
+    \item Fix $p$ and $x$ and solve for $s$. The dual reduces to,
+    \[max_s\ \sum_{l}\ \sum_{f}\ s_{fl}(q_{h(l)f} - q_{t(l)f})\]
+    As it's evident from the maximization problem defined above, the solution is to assign all the bandwidth to the flow with the highest queue differential $(q_{nf} - q_{mf})$. This corresponds to back-pressure scheduling implemented at the nodes.
+    \item Plugging $s^*(q,\ w)$ back into the dual formulation and re-arranging the terms,
+    \begin{equation}\label{9}
+        \begin{aligned}
+            D(q,\ w)\ =\ max_{p,\ x}\ (U_f(x_f) - q(s_f)x_f) - \frac{1}{\beta}\sum_{I \in \mathcal{I}}\ p_I log p_I + \\\sum_{I \in \mathcal{I}}\ p_I\sum_{l}\ (z_{nm} - w_l)a_{Il} + \sum_{l}\ w_l(\alpha_l - \epsilon)
+        \end{aligned}
+    \end{equation}
+    Now, this problem is separable in $p$ and $x$.
+    \item Solving equation (\ref{9}) for $x_f^*$ as shown in section \ref{V} of this document yields,
+    \[x_f^*\ =\ (U_f')^-1 q_{s(f)f}\]
+    \item Having solved for $s^*$ and $x^*$, we now need to solve for $p*$, i.e. the MAC protocol design. Here, the authors show that optimal solution is to simply run SU MAC protocols, i.e. the CSMA protocol with the back-off mechanism being an exponential back-off scheme dependent on the differential queue length across the links. More on this in section \ref{V} of this document.
+    \item The dual variables $q$ and $w$ are updated using the sub-gradient algorithm as shown below:
+    The queue dynamics control variable:
+    \[q_{nf}^{k+1}\ =\ q_{nf}^{k} + \gamma^{k}\frac{\partial D(q,\ w)}{\partial q_{nf}}\]
+    The available bandwidth control variable:
+    \[w_{l}^{k+1}\ =\ w_{l}^{k} + \gamma^{k}\frac{\partial D(q,\ w)}{\partial w_l}\]
+\end{itemize}
+\section{Strength and weaknesses}
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}"}
+\subsubsection{Strengths}
+\begin{itemize}
+    \item The authors of this paper employ a system model that captures the requirements in all 5 major layers of the SU network protocol stack - power allocation in the PHY, channel allocation in the MAC layer, routing in the network layer, flow rate control in the transport layer, and all these protocols are governed by the QoS guarantees necessary for the services in the application layer. This provides a consolidated 5-layer optimization procedure for the design of optimal protocols to be incorporated into the SU network protocol stack.
+    \item The incorporation of channel stability metric, i.e. $K_{f_n}(t)$ using the concept of Spectrum Life-Time (SLT) is novel and inspired. This is intriguing because it allows the problem to perceive the utility of a channel based on its stability instead of relying purely on the observations of the occupancy of the channel at a given time.
+    \item Although the main optimization problem is complex, the authors take a structured approach to decomposing the global optimization problem into sub-problems by decoupling the constraints from the objective function using dual and primal decomposition techniques.
+    \item The authors evaluate the performance of the standard Convex Optimization through Vertical Decomposition (COVD) approach summarised in the previous section of this document and conclude that the approach is too computationally complex due to the numerous interactions and iterations between the three sub-problems ($D_{1H}^{g+/-}$, $D_{1L}^{g+/-}$, and $D_2$). Hence, the authors propose a novel heuristic algorithm which turns out to be the solution to the following re-framed optimization problem.
+    \[argmax_{P^*,\ T^*}\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \Pi_{i,l}^{s_k}\]
+    such that,
+    \[t_p(f_n)\sum_i\ \sum_l\ T_{i,l}(f_n) \leq 1,\ \forall n\]
+    \[\sum_{s_k}\ \sum_{l}\ \sum_{n}\ P_{n,i,l}^{s_k} \leq P_i^C,\ \forall i\]
+    \[P_{n,i,l}^{s_k} \geq 0, \forall n,\ i,\ l,\ s_k\]
+    Solving this optimization problem by checking for the KKT conditions as shown in section \ref{V} of this document, we get the following solution for optimal power allocation,
+    \[P_{n,i,l}^{s_k}\ =\ \Big[\frac{t_p(f_n)T_{i,l}(f_n)K_{f_n}(t)b_n}{ln 2 \epsilon_i} - \frac{\Gamma \sigma^2}{|h_{n,i,l}|^2}\Big]^+\]
+    And, the following solution for channel allocation,
+    \\$T_{i,l}(f_n) = 1$, if $f_n\ =\ argmax\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \Pi_{i,l}^{s_k}$.
+    \\This makes sense intuitively because it forces the MAC protocol to select the channel that maximizes the probabilistic capability.
+    \\The authors show through MATLAB simulations that the COHA approach has a way shorter execution time due to the absence of $M_b$ the multiplier that accounts for the iteration complexity between the three sub-problems ($D_{1H}^{g+/-}$, $D_{1L}^{g+/-}$, and $D_2$) as discussed earlier.
+\end{itemize}
+\subsubsection{Weaknesses}
+\begin{itemize}
+    \item The authors in this paper do not take into account the Modulation and Coding Scheme (MCS) adaptation essential to the operation of cognitive radio nodes. MCS adaptation gives us another control knob which can be employed to satisfy the QoS guarantees in varying channel SNR conditions. We try to fix this issue by trying to incorporate the MCS adaptation into the PHY layer model in section \ref{IV} of this document.
+    \item The authors in this paper assume that the channels in the discretized spectrum of interest are orthogonal while in reality, the occupancy behavior of the PU across the channels may be highly correlated. To some extent, we try to overcome this weakness by exploring Markovian correlation based PU occupancy behavior estimation section \ref{IV} of this document. We could also explore double DQN-based prioritized experiential replay techniques which are model-free learning approaches in order to solve for the optimal policy when nothing is known about the incumbent and the radio environment.
+    \item It is unclear from the papers as to how the authors estimate the occupancy states of the channels in discretized spectrum of interest. It is possible they use some kind of Neyman-Pearson test (binary hypothesis testing with the threshold obtained by maximizing the detection accuracy while having a constraint the false alarm probability) to identify whether an individual channel is occupied by the PU. This may not be an efficient approach due to the presence of varying degrees of noise at various stages of the observation process. Instead, a more efficient approach would be a Maximum-A-Posteriori (MAP) estimator to estimate the system state given the observations.
+\end{itemize}
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}"}
+\subsubsection{Strengths}
+\begin{itemize}
+    \item The authors employ a common control channel among the SU nodes deployed within the CRAHN in order to disseminate control information from one part of the network to the other. The control information includes periodic updates of the PU occupancy behavior, network flow queue sizes, and CSMA handshakes. This is an intelligent design consideration owing to the fact that unnecessary overhead over the data channels is avoided thereby avoiding negative impacts on the SU network throughput. However, critical care has to be taken while choosing control channels (possibly at the band-edges) and hopping from one channel to the other, if needed.
+    \item The authors, through their NUM formulation and subsequent analyses, arrive at a conventional network protocol stack with slight modifications to account for the additional requirements of adaptive spectrum access. The protocol stack is a combination of a queue differential back-pressure scheduler and a modified CSMA algorithm. This could possibly reduce the development time due to re-usability of conventional modules.
+    \item There are a few interpretations in the paper which we found to be interesting. They are listed below.
+    \begin{itemize}
+        \item Modelling the interference with PUs and other SUs in the network as a conflict graph and scheduling only those links (nodes of the graph) which do not have an edge (conflict in the real-world) between them
+        \item Introduction of Wireless Spectrum Sensor Networks (WSSNs) wherein spectrum sensors co-located with the SUs are employed to off-load the sensing capabilities of the SUs thereby, to an extent, simplify the development process
+        \item The back-off timer logic in the modified CSMA protocol is highly intuitive - higher the back-pressure on the queues of the links ($q_{h(l)f} - q_{t(l)f}$) and greater the channel availability (captured by $\alpha_{(n,m;c)}$), the shorter are the back-off times (captured by $R_{(n,m;c)}$) and hence, the nodes follow a more aggressive channel access strategy and vice-versa.
+    \end{itemize}
+\end{itemize}
+\subsubsection{Weaknesses}
+\begin{itemize}
+    \item The authors of this paper assume that the occupancy behavior of the PU is known to all the SUs beforehand. This is obviously not true in real-world scenarios. The occupancy behavior of the PU has to be learnt over time and certain Artificial Intelligence techniques have to employed to accurately design a policy for spectrum access given the fact that the SUs in the network know nothing about the occupancy states of the spectrum across time and across channels. This is a possible extension of the model described in this paper and we explore this in section \ref{IV} of this document.
+    \item As discussed earlier, the control channel design is a potential weakness which needs to be made more robust by defining intelligent channel selection and frequency-hopping techniques for the same.
+\end{itemize}
+\section{Potential extensions}\label{IV} 
+\begin{itemize}
+    \item We could remove the assumption of orthogonality among channels in the discretized spectrum of interest as discussed in this item.
+    \\The SUs make noisy observations of the occupancy states of the channels as given by the following linear observation model.
+    \[Y_k(i)\ =\ H_kX_k(i) + V_k(i)\]
+    where, $X_k(i)$ represents the true state of channel $k$ at time index $i$, $H_k \sim C\mathcal{N}(0,\ \sigma_H^2)$ is the impulse response of channel $k$, $V_k(i) \sim C\mathcal{N}(0,\ \sigma_N^2)$ represents the i.i.d noise component, and $Y_k(i)$ denotes the observations of channel $k$ made at time index $i$.
+    \\We could assume a Markovian correlation of the occupancy states across channel indices and across time indices as shown by the following correlation model.
+    \\For $i=1$, we rely only on the spatial Markov chain as shown below.
+    \[\mathbb{P}(\Vec{X}=\Vec{x})\ =\ \mathbb{P}(X_1(1) = x_1)\prod_{k=2}^K\ \mathbb{P}(X_k(1)|X_{k-1}(1))\]
+    At time index $1 < i \leq T$, we rely on both the spatial Markov chain and the temporal Markov chain as shown below.
+    \[\mathbb{P}(\Vec{X}=\Vec{x})\ =\ \mathbb{P}(X_1(i) = x_1)\prod_{k=2}^K\ \mathbb{P}(X_k(i)|X_{k-1}(i),\ X_{k}(i-1))\]
+    where,
+    \[\Vec{x} \in \{0,\ 1\}^K\]
+    This is an Hidden Markov Model (HMM) because of the underlying Markov chains and because the true underlying states are hidden from view due to noise caused at the receiver and model imperfections.
+    Assuming the SU can only sense a limited number of channels due to physical design limitations, we could perform state estimation using the Viterbi algorithm which is obtained by solving the following Maximum-A-Posteriori Estimation (MAP) problem.
+    At a given time index $t$,
+    \[\Vec{x}^*(t)\ =\ argmax_{\Vec{x}(t)}\ \mathbb{P}(\Vec{X}(t)\ =\ \Vec{x}(t)|\Vec{Y}(t)\ =\ \Vec{y}(t))\]
+    We could also estimate the transition model online using the Expectation-Maximization algorithm which is obtained by the solving the following Maximum Likelihood Estimation (MLE) problem.
+    \[A\ =\ argmax_{A}\ \mathbb{P}(\vec{y}\ |\ A)\]
+    The emission model can be obtained algebraically as,
+    \[m_{x_k}(y_k(i))\ \sim \mathcal{CN}(0,\ \sigma_{H}^2 x_k + \sigma_{V}^2)\]
+    We could incorporate this model into the framework outlined in [\ref{2}] and the estimated occupancy states of the channels could then be shared with neighbouring SU nodes in the network using the already available control channel to make better informed decisions about the system state.
+    \\We could also take it one step further and have the nodes decide on an optimal sensing and access policy by formulating a POMDP problem (Partially Observable Markov Decision Process) denoted by $(\mathcal{X},\ \mathcal{A},\ \mathcal{Y},\ \mathcal{B},\ A,\ B)$ and then solving for the optimal policy by performing value iteration - either exact or approximate based on the dimensionality of the problem.
+    \begin{equation*}
+        V^*(\vec{b})\ =\ max_{a \in \mathcal{A}}\ \Big[\sum_{\vec{x} \in \mathcal{X}}\ R(\vec{x},\ a)b(\vec{x}) + \gamma \sum_{\vec{y} \in \mathcal{Y}}\ \mathbb{P}(\vec{y}|a,\ \vec{b})\ V^*(\vec{b}_a^{\vec{y}})\Big],\ \forall \vec{b} \in \mathcal{B}
+    \end{equation*}
+    \item MCS adaptation: The basic idea of MCS (Modulation and Coding Scheme) adaptation also known as Adaptive Modulation and Coding (AMC) is to dynamically adapt the constellation size, symbol rate, and coding scheme in response to a time-varying channel. In this PHY link adaptation scheme, an optimal MCS adaptation algorithm is the one which selects the MCS from the set of MCS choices with the maximum throughput while meeting the Packet Error Rate (PER) constraint. Hence, the optimization problem is,
+    \[max_{\{MCS \in \text{The set of MCS choices}\}}\ r_{MCS}(1 - PER_{MCS})\]
+    subject to,
+    \[\mathbb{P}(PER_{MCS} > PER_{threshold}) \leq 0.05\]
+    where,
+    \\$r_{MCS}$ denotes the rate of the MCS
+    \\The choice of the MCS which maximizes the throughput while satisfying the Packet Error Rate constraint depends greatly on the PER estimate. We could employ LQM translation to map the PER complexity onto a single Link Quality Metric such as the instantaneous SNR estimate, use an intelligently-structured look-up table to iterate through the MCS choices, and choose an MCS that gives us the highest throughput guarantees while satisfying the outage constraints ($PER_{threshold}$) keeping in mind the estimation errors that may have crept into our decision.
+    \item Weighted flow scheduling: In real-world situations, some flows have higher priority than others and hence carry a larger weight. For instance, flows corresponding to real time video streams have more stringent QoS requirements than simple asynchronous web-page requests. This has to be incorporated into the flow scheduling problem. One solution would be the weighted queue-differential back-pressure scheduler which turns out to be the extension of the standard back-pressure scheduler outlined earlier in this document. In other words, \[f_{h(l)t(l)}^*\ =\ argmax_{f \in \mathcal{F}}\ w_f(q_{h(l)f}^{(k)} - q_{t(l)f}^{(k)})\] would be scheduled using the modified MAC protocols.
+\end{itemize}
+\section{Missing steps in the derivations}\label{V}
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}"}
+\subsubsection{Solving the Cross-layer Optimization problem using Vertical Decomposition}
+Let's write the Lagrangian as follows,
+\begin{equation*}
+    \begin{aligned}
+        \mathcal{L}\ =\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \frac{r_{i,l}^{s_k}}{\sum_{n}\ g_{n,i,+/-,l} K_{f_n}(t)} - \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \alpha_{i,l}^{s_k}(r_{i,l}^{s_k}\sum_n\ g_{n,i,+/-,l}^{s_k} - R_{min}^{s_k}) - \\\sum_{s_k}\ \sum_{i}\ \sum_{l}\ \sum_{n}\ \beta_{n,i,l}^{s_k}(g_{n,i,+,l}^{s_k} - g_{n,i,-,l}^{s_k}) - \\\sum_{s_k}\ \sum_{i}\ \sum_{l}\ \sum_n\ \chi_{n,i,l}^{s_k}(x_{n,i,l}^{s_k} - max\{g_{n,i,-,l}^{s_k},\ g_{n,i,+,l}^{s_k}\}) + \\\sum_{s_k}\ \sum_{i}\ \delta_i^{s_k}(\sum_l\ (r_{i,l}^{s_k})^2 - 1) + \\\sum_i\ \epsilon_i(\sum_{s_k}\ \sum_l\ \sum_n\ P_{n,i,l}^{s_k} - P_i^C) + \\\sum_n\ \phi_n(t_p(f_n) \sum_i\ \sum_l\ T_{i,l}(f_n) - 1)
+    \end{aligned}
+\end{equation*}
+Decomposing the above equation to decouple the unrelated constraints, we get the joint flow control and routing problem with Minimum Rate Requirement QoS constraints,
+\begin{equation}
+    \begin{aligned}\label{6}
+        D_1\ =\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \frac{r_{i,l}^{s_k}}{\sum_{n}\ g_{n,i,+/-,l} K_{f_n}(t)} - \\\sum_{s_k}\ \sum_{i}\ \sum_{l}\ \alpha_{i,l}^{s_k}(r_{i,l}^{s_k}\sum_n\ g_{n,i,+/-,l}^{s_k} - R_{min}^{s_k}) + \\\sum_{s_k}\ \sum_i\ \sum_l\ \sum_n\ (\chi_{n,i,l}^{s_k} - \beta_{n,i,l}^{s_k})g_{n,i,+,l}^{s_k} + \\\sum_{s_k}\ \sum_i\ \sum_l\ \sum_n\ (\chi_{n,i,l}^{s_k} + \beta_{n,i,l}^{s_k})g_{n,i,-,l}^{s_k} + \\\sum_{s_k}\ \sum_{i}\ \delta_i^{s_k}(\sum_l\ (r_{i,l}^{s_k})^2 - 1)
+    \end{aligned}
+\end{equation}
+And, a joint spectrum allocation and power allocation problem,
+\begin{equation}\label{7}
+    \begin{aligned}
+        D_2\ =\ \sum_{s_k}\ \sum_i\ \sum_l\ \sum_n\ \chi_{n,i,l}^{s_k} x_{n,i,l}^{s_k} + \sum_i\ \epsilon_i(\sum_{s_k}\ \sum_l\ \sum_n\ P_{n,i,l}^{s_k} - P_i^C) + \\\sum_n\ \phi_n(t_p(f_n) \sum_i\ \sum_l\ T_{i,l}(f_n) - 1)
+    \end{aligned}
+\end{equation}
+Solving $D_2$, we get the solution for \textbf{optimal spectrum allocation and power allocation} as shown below.
+\\$D_2$ is a unconstrained convex optimization problem. Setting the gradient equal to zero to obtain the optimal.
+\[\frac{\partial D_2}{\partial P_{n,i,l}^{s_k}}\ =\ \chi_{n,i,l}^{s_k} \frac{t_p(f_n) T_{i,l}(f_n) ln 2 b_n |h_{n,i,l}|^2}{\Gamma \sigma^2 + |h_{n,i,l}|^2P_{n,i,l}^{s_k}} - \epsilon_i\ =\ 0\]
+\\Re-writing this and solving for $P_{n,i,l}^{s_k}$ using descent methods while ensuring that $P_{n,i,l}^{s_k}$ satisfies the non-negative power constraint and the maximum power constraint, we get the projection gradient descent step given below iterated until convergence as our algorithm to obtain the optimal power allocation,
+\[P_{n,i,l}^{s_k}\ =\ \Big[\frac{\chi_{n,i,l}^{s_k} t_p(f_n) T_{i,l}(f_n) b_n}{ln2 \epsilon_i} - \frac{\Gamma \sigma^2}{|h_{n,i,l}|^2}\Big]^+\]
+Now, let's solve for the optimal spectrum allocation as shown below.
+\[\frac{\partial D_2}{\partial T_{i,l}(f_n)}\ =\ t_p(f_n)\Big(\chi_{n,i,l}^{s_k} b_n log_2\Big(\frac{1+|h_{n,i,l}|^2 P_{n,i,l}^{s_k}}{\Gamma \sigma^2}\Big) - \phi_n\Big)\ =\ 0\]
+Re-writing this, we get the following solution,
+\begin{equation*}
+    T_{i,l}(f_n)\ =\ 
+    \begin{cases}
+        1, & \text{if}\ argmax\ \chi_{n,i,l}^{s_k} b_n log_2(\frac{1+|h_{n,i,l}|^2 P_{n,i,l}^{s_k}}{\Gamma \sigma^2})\\
+        0, & \text{otherwise}
+    \end{cases}
+\end{equation*}
+However, $D_1$ is still a coupled optimization problem. We can decouple the objective function and the constraints as shown below.
+\begin{equation}
+    \begin{aligned}
+        D_{1H}^{g+/-}\ =\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \frac{r_{i,l}^{s_k}}{\sum_{n}\ g_{n,i,+/-,l} K_{f_n}(t)} + \\\sum_{s_k}\ \sum_i\ \sum_l\ \sum_n\ (\chi_{n,i,l}^{s_k} \mp \beta_{n,i,l}^{s_k})g_{n,i,-,l}^{s_k} - \\\sum_{s_k}\ \sum_{i}\ \sum_{l}\ \alpha_{i,l}^{s_k}(r_{i,l}^{s_k}\sum_n\ g_{n,i,+/-,l}^{s_k} - R_{min}^{s_k})
+    \end{aligned}
+\end{equation}
+\begin{equation}
+    \begin{aligned}
+        D_{1L}^{g+/-}\ =\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \frac{r_{i,l}^{s_k}}{\sum_{n}\ g_{n,i,+/-,l} K_{f_n}(t)} + \\\sum_{s_k}\ \sum_{i}\ \delta_i^{s_k}(\sum_l\ (r_{i,l}^{s_k})^2 - 1)
+    \end{aligned}
+\end{equation}
+Now, let's solve for the route selection optimality at the network layer by solving $D_{1L}^{g+/-}$.
+\[\frac{\partial D_{1L}^{g+/-}}{\partial r_{i,l}^{s_k}}\ =\ \frac{1}{\sum_{n}\ g_{n,i,+/-,l}^{s_k} K_{f_n}(t)} + 2\delta_i^{s_k} r_{i,l}^{s_k}\ =\ 0\]
+Therefore,
+\begin{equation*}
+    r_{i,l}^{s_k}\ =\ 
+    \begin{cases}
+        -1, & \text{if}\ l\ =\ argmax\ \sum_n\ (g_{n,i,-,l}^{s_k} K_{f_n}(t))\\
+        1, & \text{if}\ l\ =\ argmax\ \sum_n\ (g_{n,i,+,l}^{s_k} K_{f_n}(t))\\
+        0, & \text{otherwise}
+    \end{cases}
+\end{equation*}
+This solution tells us to choose the most stable paths (contained in the stability metric $K_{f_n}(t)$) instead of minimum hop routing.
+\\Now, let's solve for the flow control optimality by solving $D_{1H}^{g+/-}$.
+\\We'll solve for the outflow and inflow rates as shown below.
+The dual factor $\chi_{n,i,l}^{s_k}$ is updated in a outer loop using the sub-gradient projection method as follows.
+\[\chi_{n,i,l}^{s_k}(u+1)\ =\ [\chi_{n,i,l}^{s_k}(u) + s^u(x_{n,i,l}^{s_k} - max\{g_{n,i,-,l}^{s_k},\ g_{n,i,+,l}^{s_k}\}]^+\]
+where, $u$ is the iteration index and $s^u$ is the step-size.
+\\The local Lagrangian multiplier $\alpha_{i,l}^{s_k}$ is solved using sub-gradient projection as shown below.
+\[\alpha_{i,l}^{s_k}(v+1)\ =\ [\alpha_{i,l}^{s_k}(v) + s^v \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \alpha_{i,l}^{s_k}(r_{i,l}^{s_k}\sum_n\ g_{n,i,+/-,l}^{s_k} - R_{min}^{s_k})]^+\]
+The local Lagrangian multiplier $\beta_{n,i,l}^{s_k}$ is solved using sub-gradient projection as shown below.
+\[\beta_{n,i,l}^{s_k}(v+1)\ =\ [\beta_{n,i,l}^{s_k}(v) + s^v \sum_n\ g_{n,i,+/-,l}^{s_k}]^+\]
+Using these updated global and local Lagrangian multipliers, we can write the solution for the flow rate as follows.
+\begin{equation*}
+    g_{n,i,+/-,l}^{s_k}\ =\ 
+    \begin{cases}
+        s^v[U_{i,l}' + (\chi_{n,i,l}^{s_k} \mp \beta_{n,i,l}^{s_k})], & \text{if}\ i \in \mathcal{I}\setminus\{a_k,\ d_k\}\\
+        s^v[U_{i,l}' - \alpha_{i,l}^{s_k} r_{i,l}^{s_k} + (\chi_{n,i,l}^{s_k} \mp \beta_{n,i,l}^{s_k})], & \text{if}\ i \in \{a_k,\ d_k\}
+    \end{cases}
+\end{equation*}
+\subsubsection{Solving the Cross-layer Optimization problem using a Heuristic Algorithm}
+The modified cross-layer optimization problem is given below:
+\[argmax_{P^*,\ T^*}\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \Pi_{i,l}^{s_k}\]
+such that,
+\[t_p(f_n)\sum_i\ \sum_l\ T_{i,l}(f_n) \leq 1,\ \forall n\]
+\[\sum_{s_k}\ \sum_{l}\ \sum_{n}\ P_{n,i,l}^{s_k} \leq P_i^C,\ \forall i\]
+\[P_{n,i,l}^{s_k} \geq 0,\ \forall n,\ i,\ l,\ s_k\]
+Using non-negative Lagrangian multipliers, we formulate the dual problem as,
+\[maximize\ \sum_{s_k}\ \sum_{i}\ \sum_{l}\ \Pi_{i,l}^{s_k} - \sum_{n}\ \phi_n(t_p(f_n)\sum_i\ \sum_l\ T_{i,l}(f_n) - 1) - \sum_i\ \epsilon_i(\sum_{s_k}\ \sum_{l}\ \sum_{n}\ P_{n,i,l}^{s_k} - P_i^C)\]
+\[\frac{\partial \mathcal{L}}{\partial P_{n,i,l}^{s_k}}\ =\ 0\]
+\[\frac{\partial \mathcal{L}}{\partial T_{i,l}(f_n)}\ =\ 0\]
+\[T_{i,l}(f_n)(t_p(f_n)K_{f_n}(t) b_n log_2(1+\frac{|h_{n,i,l}|^2 P_{n,i,l}^{s_k}}{\Gamma \sigma^2}) - \phi_n)\ =\ 0\]
+\[P_{n,i,l}^{s_k}(t_p(f_n)T_{i,l}(f_n)K_{f_n}(t)ln 2 b_n \frac{|h_{n,i,l}|^2}{\Gamma \sigma^2 + |h_{n,i,l}|^2P_{n,i,l}^{s_k}}\ =\ 0\]
+The KKT conditions are given below.
+\\The primal feasibility constraints,
+\[t_p(f_n)\sum_i\ \sum_l\ T_{i,l}(f_n) \leq 1,\ \forall n\]
+\[\sum_{s_k}\ \sum_{l}\ \sum_{n}\ P_{n,i,l}^{s_k} \leq P_i^C,\ \forall i\]
+\[P_{n,i,l}^{s_k} \geq 0,\ \forall n,\ i,\ l,\ s_k\]
+The dual feasibility constraints,
+\[\epsilon_i \geq 0,\ \forall i\]
+\[\phi_n \geq 0,\ \forall n\]
+The complementary slackness constraints,
+\[\phi_n(t_p(f_n)\sum_i\ \sum_l\ T_{i,l}(f_n) - 1)\ =\ 0\]
+\[\epsilon_i(\sum_{s_k}\ \sum_l\ \sum_n\ P_{n,i,l}^{s_k} - P_i^C)\ =\ 0\]
+From the maximization of the Lagrangian formulation outlined earlier, we get,
+\[T_{i,l}(f_n)\ =\ 1,\ \text{if}\ f_n\ =\ argmax\ \sum_{s_k}\ \sum_i\ \sum_l\ \Pi_{i,l}^{s_k}\]
+And,
+\[P_{n,i,l}^{s_k}\ =\ \Big[\frac{t_p(f_n)T_{i,l}(f_n)K_{f_n}(t)b_n}{ln2 \epsilon_i} - \frac{\Gamma \sigma^2}{|h_{n,i,l}|^2}\Big]^+\]
+The projection is to bring back the out-of-bounds point back to $[0, P_{i}^C],\ \forall i$.
+\subsection{"\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}"}
+\subsubsection{The SU Network Protocol Stack Solution}
+The optimization problem was defined in the previous subsection. Let's use Lagrangian duality theory to arrive at solutions for rate control, flow scheduling, and MAC protocol design.
+\[D(q,\ w)\ =\ max_{p,\ s,\ x}\ \mathcal{L}(p,\ s,\ x,\ q,\ w)\]
+This is formulated as follows based on the problem formulation and the system model described in the previous sections.
+\begin{equation}
+    \begin{aligned}
+        max_{p,\ s,\ x}\ \sum_{f \in \mathcal{F}}\ (U_f(x_f) - q_s(f)x_f) - \frac{1}{\beta}\sum_{I \in \mathcal{I}}\ p_I log p_I + \\\sum_{l}\ \sum_{f}\ s_{fl}(q_{h(l)f} - q_{t(l)f}) - \sum_{l}\ w_l(\sum_{I \in \mathcal{I}}\ p_I a_{Il} + \epsilon - \alpha_l)
+    \end{aligned}
+\end{equation}
+where, $\epsilon$ is a small quantity added to change the inequality constraint $\sum_{I \in \mathcal{I}} p_I a_{Il} \leq \alpha_l,\ l \in \mathcal{L}$ into an equality constraint and $\beta$ is a large constant added to the objective function so that $\frac{1}{\beta} \rightarrow 0$.
+The approach taken by the authors to solve this problem formulation is as follows:
+\begin{itemize}
+    \item Fix $p$ and $x$ and solve for $s$. The dual reduces to,
+    \[max_s\ \sum_{l}\ \sum_{f}\ s_{fl}(q_{h(l)f} - q_{t(l)f})\]
+    As it's evident from the maximization problem defined above, the solution is to assign all the bandwidth to the flow with the highest queue differential $(q_{nf} - q_{mf})$. This corresponds to \textbf{back-pressure scheduling} implemented at the nodes.
+    \item Plugging $s^*(q,\ w)$ back into the dual formulation and re-arranging the terms,
+    \begin{equation}\label{11}
+        \begin{aligned}
+            D(q,\ w)\ =\ max_{p,\ x}\ \sum_{f \in \mathcal{F}}\ (U_f(x_f) - q(s_f)x_f) - \frac{1}{\beta}\sum_{I \in \mathcal{I}}\ p_I log p_I + \\\sum_{I \in \mathcal{I}}\ p_I\sum_{l}\ (z_{nm} - w_l)a_{Il} + \sum_{l}\ w_l(\alpha_l - \epsilon)
+        \end{aligned}
+    \end{equation}
+    Now, this problem is separable in $p$ and $x$.
+    \item Let's solve equation (\ref{11}) for $x_f^*$.
+    \[\frac{\partial (U_f(x_f) - q_{s(f)f}x_f)}{\partial x_f}\ =\ 0\]
+    Which yields,
+    \[U_f'(x_f) - q_{s(f)f}\ =\ 0\]
+    \[x_f^*\ =\ (U_f')^{-1} q_{s(f)f}\]
+    \item Now, let's derive the CSMA protocol for the MAC layer from the formulated optimization problem with some modifications to the back-off timers.
+    \\Assuming a standard CSMA protocol, if a node is backlogged with flows, it waits for a period of time distributed as an exponential random variable with mean $\frac{L}{CR_l}$ where $L$ is the mean packet length (exponentially distributed), $C$ is the channel capacity, and $R_l$ refers to the link-dependent quantities whose expression is derived as follows.
+    \\The secondary network's MAC strategy progression can be modelled as a continuous Markov chain with transitions as follows:
+    \begin{itemize}
+        \item If independent set $I$ is scheduled, the chain is in state $a_I$.If link $l \in I$ is not scheduled and there are no conflicts, the chain transitions to $a_I + e_l$, $e_l$ being the $|\mathcal{L}|$-dimensional vector with all zeros except for the $l^{th}$ position with rate $\alpha_l R_l$.
+        \item If independent set $I$ is scheduled, the chain is in state $a_I$. If link $l \in I$ is scheduled, the chain transitions from $a_I$ to $a_I - e_l$ with rate 1.
+    \end{itemize}
+    The stationary distribution of this chain is given by,
+    \[P(s(t)=a_I;R_l)\ =\ \prod_{l \in \mathcal{L}}\ (R_l \alpha_l)^{a_{Il}}\]
+    Simplifying this by choosing $r_l\ =\ log R_l$,
+    \[P(s(t)=a_I;R_l)\ =\ \prod_{l \in \mathcal{L}}\ e^{(a_{Il}ln R_l + a_{Il}ln \alpha_l)}\]
+    \[P(s(t)=a_I;R_l)\ =\ e^{(\sum_{l \in \mathcal{L}}\ a_{Il}(ln R_l + ln \alpha_l))}\]
+    \[P(s(t)=a_I;R_l)\ =\ e^{(\sum_{l \in \mathcal{L}}\ a_{Il}(r_l + ln \alpha_l))}\]
+    Now, the stationary distribution of this Markov Chain is,
+    \[max\ \sum_{I \in \mathcal{I}}\ p_I \sum_{l \in \mathcal{L}}\ a_{Il}(r_l + ln \alpha_l) - \sum_{I \in \mathcal{I}}\ p_I log p_I\]
+    Now, from equation (\ref{11}), $- \frac{1}{\beta}\sum_{I \in \mathcal{I}}\ p_I log p_I + \sum_{I \in \mathcal{I}}\ p_I\sum_{l}\ (z_{nm} - w_l)a_{Il} + \sum_{l}\ w_l(\alpha_l - \epsilon)$ is similar to $\sum_{I \in \mathcal{I}}\ p_I \sum_{l \in \mathcal{L}}\ a_{Il}(r_l + ln \alpha_l) - \sum_{I \in \mathcal{I}}\ p_I log p_I$ with an additional constant term $\sum_{l}\ w_l(\alpha_l - \epsilon)$ and $ln \alpha_l R_l$ replaced with $\beta(z_{nm} - w_l)$.
+    \\Now,
+    \[ln \alpha_l R_l\ =\ \beta(z_{nm} - w_l)\]
+    \[R_l\ =\ \frac{e^{\beta(z_{nm} - w_l)}}{\alpha_l}\]
+    This $R_l$ or $R_{(n,m;c)}$ is termed as transmission aggressiveness by the authors. It is evident and intuitive from the above result that as the queue differential back-pressure increases on a link and as the channel availability improves, the MAC strategy becomes more aggressive, i.e. it uses shorter back-off times.
+\end{itemize}
+\section{References}
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,Ref}
+\begin{enumerate}
+    \item Y. Teng and M. Song, "Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications," in IEEE Access, vol. 5, pp. 18692-18706, 2017. doi: 10.1109/ACCESS.2017.2671882\label{1}
+    \item A. Cammarano, F. L. Presti, G. Maselli, L. Pescosolido and C. Petrioli, "Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks," in IEEE Transactions on Parallel and Distributed Systems, vol. 26, no. 9, pp. 2599-2609, 1 Sept. 2015. doi: 10.1109/TPDS.2014.2350495\label{2}
+\end{enumerate}
+\clearpage
+\section{Appendix}
+\subsection{Models used in "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}"}
+\subsubsection{The Physical Layer (PHY)}
+There are $I$ Secondary Users in the Distributed Cognitive Radio Network denoted by the set,
+\[\mathcal{I}\ =\ \{1,\ 2,\ 3,\ ...,\ I\}\]
+The wideband spectrum of interest is divided into $N$ \textbf{orthogonal channels} denoted by,
+\[\mathcal{N}\ =\ \{1,\ 2,\ 3,\ ...,\ N\}\]
+The bandwidth allocated to user $n \in \mathcal{N}$ is denoted by $b_n$.
+\\Each user $i \in \mathcal{I}$ has $L_i$ links such that,
+\[\sum_{i=1}^{I}\ L_i\ =\ L\]
+where, $L$ is defined as the total number of links in the network.
+\\For an SU $i$, the authors define a vector,
+\[\textbf{H}_i\ =\ [h_{i,1},\ h_{i,2},\ ...,\ h_{i,l},\ ...,\ h_{i,\ L_i}]\]
+where,
+\[h_{i,l}\ =\ [h_{1,i,l},\ h_{2,i,l},\ ...,\ h_{n,i,l},\ ...,\ h_{N,i,l}]^T\]
+where, $h_{n,i,l}$ represents the i.i.d fading gain on channel $n \in \mathcal{N}$ allocated to link $l \in \{1,\ 2,\ 3,\ ...,\ L_i\}$ of SU $i \in \mathcal{I}$. The authors assume a \textbf{Rayleigh Channel Fading Model}.
+\\The system setup also considers $K$ unicast sessions between the SUs in the network denoted by the set,
+\[\mathcal{S}\ =\ \{s_1,\ s_2,\ s_3,\ ...,\ s_K\}\]
+Each session (can also be considered to be a flow) is characterized by a source and destination pair $\{a_k,\ d_k\}$ where, $a_k,\ d_k \in \mathcal{I}$.
+Now, throughput this document, $P_{n,i,l}^{s_k}$ is used to denote the power allocated to SU $i \in \mathcal{I}$ for session $s_k \in \mathcal{S}$ and link $l \in \{1,\ 2,\ 3,\ ...,\ L_i\}$ on channel $n \in \mathcal{N}$. Also, the maximum power budget for SU $i$ is denoted by $P_i^C$.
+\subsubsection{The MAC Layer}
+The authors define $t_p(t)$ in order to capture the spectrum access activity of the incumbents (licensed users) termed Primary Users (PUs).
+\[t_p(t)\ =\ \{t_p(f_n),\ n \in \mathcal{N}\}\]
+where, $t_p(f_n)\ =\ 0$ represents the fact that the PUs occupy channel $n$ in the wideband spectrum of interest.
+\\The authors also define $T_i(t),\ i \in \mathcal{I}$ which indicates the access strategy of the SUs. $T_i(t)$ is a $L_i x N$ matrix for SU $i$ where,
+\begin{equation*}
+    T_{i,l}(f_n)\ =\ 
+    \begin{cases}
+      1, & \text{if}\ the\ i^{th}\ SU's\ l^{th}\ link\ takes\ up\ f_n \\
+      0, & \text{if}\ the\ i^{th}\ SU's\ l^{th}\ link\ does\ not\ use\ f_n
+    \end{cases}
+\end{equation*}
+The authors assume an SU Overlay Access scheme wherein the SUs can access multiple orthogonal channels simultaneously and exclusively only when the channels are free from PU and other SU transmissions.
+\\The SNR for SU $i \in \mathcal{I}$ whose $l^{th}$ link takes up channel $f_n$ for session $s_k \in \mathcal{S}$ is given by,
+\[\gamma_{n,i,l}^{s_k}\ =\ \frac{|h_{n,i,l}|^2 P_{n,i,l}^{s_k}}{\Gamma \sigma^2}\]
+where,
+$\Gamma\ \triangleq\ \frac{-ln (5B_{s_k}^{min})}{1.5}$ is defined to be the SNR gap corresponding to the minimum targeted Block Error rate for session $s_k$, $B_{s_k}^{min}$, and
+$\sigma^2$ denotes the noise variance at the receiver.
+\\The authors also present the concept of \textbf{Spectrum Life-Time (SLT)} with which we can perceive connection stability of links over channels instead of pure observations of the occupancy behaviors of the PUs and the SUs at any given time. In this regard, the authors define $\alpha_n$ as the losing availability factor for channel $n$, the stability of $f_n$ then follows an exponential distribution with PDF
+$p_{f_n}\ =\ \alpha_n e^{-\alpha_n t}$ with average spectrum lifetime given by $\frac{1}{\alpha_n}$.
+\subsubsection{The Network Layer}
+\[\mathcal{R}\ =\ \{R^{s_1},\ R^{s_2},\ R^{s_3},\ ...,\ R^{s_K}\}\]
+The authors define the above mentioned set which denotes the set of acyclic path topologies with each node where,
+\[R^{s_k}(t)\ =\ \{r_{i,l}^{s_k},\ i \in \mathcal{I},\ l \in \{1,\ 2,\ 3,\ ...,\ L_i\}\}\]
+\begin{equation*}
+    r_{i,l}^{s_k}\ =\ 
+    \begin{cases}
+      1, & \text{if}\ link\ l\ exits\ from\ node\ i\ in\ session\ s_k \\
+      -1, & \text{if}\ link\ l\ enters\ node\ i\ in\ session\ s_k\\
+      0, & no\ connection
+    \end{cases}
+\end{equation*}
+\subsubsection{The Transport Layer}
+\[\mathcal{G}\ =\ \{G^{s_1},\ G^{s_2},\ G^{s_3},\ ...,\ G_{s_K}\}\]
+The authors define the above mentioned set which maps the flows to links and channels of the SUs where,
+\[G^{s_k}\ =\ \{g_{n,i,+/-,l}^{s_k},\ i \in \mathcal{I},\ n \in \mathcal{N},\ and\ l \in \{1,\ 2,\ 3,\ ...,\ L_i\}\}\]
+where,
+$g_{n,i,+/-,l}^{s_k}$ is defined as the flow rate on link $l$ on channel $n$ for data entering ($+$) or data leaving ($-$) SU $i$.
+For $i \not\in \{a_k,\ d_k\}$ for session $s_k$,
+\[g_{n,i,-,l}^{s_k} \leq g_{n,i,+,l}^{s_k}\]
+\subsubsection{The Application Layer}
+The authors define a few QoS guarantees for the sessions in the Distributed Cognitive Radio Network. More specifically,
+\begin{itemize}
+    \item Strict requirements of non-interference with the licensed users
+    \item Minimum rate requirements for each of the flows/sessions in the network which are denoted by $R_{min}^{s_k}$
+\end{itemize}
+\subsubsection{The Utility}
+The standard definition of throughput detailed by the authors based on the aforementioned System Model is,
+\[x_{i,l}^{s_k}\ =\ \sum_{n=1}^{N}\ x_{n,i,l}^{s_k}\]
+where,
+\[x_{n,i,l}^{s_k}\ =\ t_p(f_n) T_i(f_n) b_n log_2(1+\gamma_{n,i,l}^{s_k})\]
+The above equation is the standard capacity equation with the cognitive radio non-interference constraints encapsulated by $t_p(f_n)$ and $T_i(f_n)$.
+\\Here,
+\\$\gamma_{n,i,l}^{s_k}\ =\ \frac{|h_{n,i,l}|^2{P_{n,i,l}^{s_k}}}{\Gamma \sigma^2}$ is the SNR and $\Gamma\ =\ \frac{-ln(5B_{s_k}^{min})}{1.5}$ is the SNR gap for minimum targeted BER.
+This standard throughput equation has been modified by the authors to capture their interpretation of the system dynamics, i.e. incorporate the Spectrum Life-Time (SLT) metric defined earlier in the MAC layer. The re-defined throughput equation is given below.
+\[\Bar{x}\ \triangleq\ The\ average\ probabilistic\ throughput\]
+\[\Bar{x}\ =\ \sum_{s_k}\ \sum_{l}\ \sum_{n}\ x_{n,i,l}^{s_k}\frac{1}{\alpha_n}\]
+\subsection{Models used in "\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}"}
+The authors in this work take a different approach to describing the System Model. They categorize their system setup into separate models, namely, the Secondary Network Model, the Traffic Model, and the Interference/Conflicts Model instead of the OSI-Layering based system setup described in [\ref{1}].
+\subsubsection{The Secondary Network Model}
+The authors in this work model the SU Network as a static multigraph with $N$ nodes and $L$ links - more concisely represented by,
+\[\mathcal{G} \triangleq\ (\mathcal{N},\ \mathcal{L})\] 
+where,
+\\$\mathcal{N}\ =\ \{1,\ 2,\ 3,\ ...,\ N\}$ constitutes the set of secondary users (nodes in the multigraph)
+\\while, 
+\\$\mathcal{L}\ =\ \{(n,\ m;\ c),\ n,\ m \in \mathcal{N}, c \in \mathcal{C}\}$ constitutes the set of all links in the network (edges of the multigraph) with $n\ =\ h(l)$ as the head of the link, $m\ =\ t(l)$ as the tail of the link, and $c\ =\ c(l)$ as the channel used by the link
+\\where, 
+\\$C\ =\ \{c_1,\ c_2,\ c_3,\ ...,\ c_K\}$ constitutes the set of channels in our wideband spectrum of interest, each of bandwidth $B$ and capacity $C$ (given by the standard capacity equation).
+\\The existence of the link $(n,\ m;\ c)$ means that node $n$ can communicate with node $m$ using channel $c$.
+\\For each node $n \in \mathcal{N}$, the authors define the set of incoming links as,
+\[\mathcal{L}_i(n)\ \triangleq\ \{l\ =\ (m,\ n';\ c) \in \mathcal{L}:\ n'\ =\ n\}\]
+And the set of outgoing links as,
+\[\mathcal{L}_o(n)\ \triangleq\ \{l\ =\ (n',\ m;\ c) \in \mathcal{L}:\ n'\ =\ n\}\]
+The authors also assume that periodic updates of the availability of the channels in the wideband spectrum of interest are sent over to all the SUs in the CRAHN and these SUs occupy spectrum holes identified from this information. Based on this obtained channel availability information, each SU, i.e. $n \in \mathcal{N}$ computes, for each of its outgoing links $(n,\ m)$ a set of channel availability coefficients denoted by $\alpha_{(n,\ m;\ c_1)},\ \alpha_{(n,\ m;\ c_2)},\ \alpha_{(n,\ m;\ c_3)},\ ...,\ \alpha_{(n,\ m;\ c_K)}$. These channel availability coefficients combine the belief that channel $c \in \mathcal{C}$ is free in the nominal interference region of the SU along with the availability of node $m$ to receive on this specific channel. The authors incorporate a very simple, heuristic approach to channel selection - the SU $n \in \mathcal{N}$ selects the channel for transmission to SU $m \in \mathcal{N}$ from the set of channels $C_{nm}(\alpha_{min})$ with availability greater than a minimum threshold $\alpha_{min}$.
+\subsubsection{Traffic Model}
+Let,
+\\$\mathcal{F}\ \triangleq\ $The set of all end-to-end flows in the CRAHN
+\\And,
+\\$(s(f),\ d(f)) \in \mathcal{N}^2\ \triangleq\ $the <src, dst> node pair associated with the flow $f \in \mathcal{F}$ where, $s(f),\ d(f) \in \mathcal{N}$.
+\\Let $x_f$ be defined as the average number of bits/second produced by the source node $s(f)$.
+\\The authors pose non-negative and maximum flow rate constraints for $x_f$ as shown below.
+\[x_f \in [0,\ x_M]\]
+The authors also present the node balance equations for the flows as follows,
+\begin{equation*}
+    \begin{cases}
+        x_f + \sum_{l \in \mathcal{L}_i(n)}\ s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}\ s_{fl}, & \text{if}\ n\ =\ s_{f},\ f \in \mathcal{F}\\
+        \sum_{l \in \mathcal{L}_i(n)}\ s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}\ s_{fl}, & \text{if}\ n\ \not=\ s_{f},\ d_f,\ f \in \mathcal{F}
+    \end{cases}
+\end{equation*}
+Each flow $f \in \mathcal{F}$ is associated with a utility function $U_f(x_f)$ which is assumed to be strictly concave, non-decreasing, and differentiable. The authors propose to use utility functions from fairness problems such as $log(1 + x_f)$ and $\beta_f x_f^{1-\eta_f}(1-\eta_f)$.
+\subsubsection{The Interference/Conflicts Model}
+The following are some of the key design aspects of the Interference Model laid down in this work.
+\begin{enumerate}
+    \item Co-Channel Interference: The sender of one link is in the interference range of the sender or the receiver of another link and both links use the same channel
+    \item Owing to the physical design constraints of the SU nodes, it's assumed that each node can transmit over only one channel at a given time. Therefore, it is important to note that for a given SU $n \in \mathcal{N}$, link $l \in \mathcal{L}_o(n)$ has conflicts with other outgoing links of the node, i.e. $l' \in \mathcal{L}_o(n)$ where, $l\ \not=\ l'$ and $c(l)\ \not=\ c(l')$.
+    \item In order to efficiently capture these conflicts, the authors employ a \textbf{Conflict Graph} denoted by $\mathcal{G}_C\ =\ (\nu,\ \epsilon)$, wherein the nodes of the graph ($\nu$) represent the links and the edges in the graph ($\epsilon$) represent the conflicts between the links. So, intuitively, two links cannot transmit over the same channel at the same time if there is an edge between them.
+    \item Let, $\mathcal{I}\ \subseteq\ \nu$ be the collection of sets of links in the network which can transmit at the same time without conflicts/interference with each other. These are also termed as the independent sets of $\mathcal{G}_c$.
+    \item $I \in \mathcal{I}$ is a binary vector indicating which links belong to that independent set represented by $I$. In other words, $I\ =\ [a_{I1},\ a_{I2},\ a_{I3},\ ...,\ a_{IL}]$ where, $a_{Il}\ =\ 1$, if $l \in I$ and $a_{Il}\ =\ 0$, if $l \not\in I$.
+    \item $p_I$ is defined as the frequency with which the set $I \in \mathcal{I}$ is scheduled such that $\sum_{I \in \mathcal{I}}\ p_I\ =\ 1$.
+    \item From the above points, the authors obtain an expression for the average transmission rate over a link $l$ as,
+    \[\sum_{f \in \mathcal{F}}\ s_{fl}\ =\ \sum_{I \in \mathcal{I}}\ p_I a_{Il}\]
+\end{enumerate}
+\end{document}
