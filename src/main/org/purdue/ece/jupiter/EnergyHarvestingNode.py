@@ -33,7 +33,7 @@ class EnergyHarvestingNode(object):
     STATE_STRING_SEPARATOR = '_'
 
     # Confidence Bound
-    CONFIDENCE_BOUND = 30
+    CONFIDENCE_BOUND = 100
 
     # Get all the possible states - A state is considered to be a 2-tuple or a pair <Q_k, g_k>
     def get_all_possible_states(self):
@@ -122,12 +122,14 @@ class EnergyHarvestingNode(object):
 
     # Get the optimal policy from value iteration
     def get_value_iteration_optimality(self):
+        print('[DEBUG] EnergyHarvestingNode get_value_iteration_optimality: Entering Value Iteration with discount '
+              'factor {}!'.format(self.DISCOUNT_FACTOR))
         # A string representation of the states
         all_possible_states = [str(s[0]) + self.STATE_STRING_SEPARATOR + str(s[1]) for s in self.all_possible_states]
         # The current value function
         current_value_function = dict()
         # The initial value function as a dict referred to by the string representation of the process states
-        initial_value_function = {s: 0.00001 for s in all_possible_states}
+        initial_value_function = {s: 1e-10 for s in all_possible_states}
         self.value_iteration_iterations_array.append(0)
         self.value_iteration_value_function_array.append(initial_value_function)
         # The previous value function
@@ -171,15 +173,22 @@ class EnergyHarvestingNode(object):
             iteration_count += 1
             self.value_iteration_iterations_array.append(iteration_count)
         self.value_iteration_optimality = optimal_policy
+        print('[INFO] EnergyHarvestingNode get_value_iteration_optimality: The optimal policy is {}'.format(
+            optimal_policy))
+        print('[INFO] EnergyHarvestingNode get_value_iteration_optimality: The optimal value function is {}'.format(
+            current_value_function))
+        print('[DEBUG] EnergyHarvestingNode get_value_iteration_optimality: Value Iteration completed...')
 
     # Get the optimal policy from policy iteration
     def get_policy_iteration_optimality(self):
+        print('[DEBUG] EnergyHarvestingNode get_policy_iteration_optimality: Entering Policy Iteration with discount '
+              'factor {}!'.format(self.DISCOUNT_FACTOR))
         # A string representation of the states
         all_possible_states = [str(s[0]) + self.STATE_STRING_SEPARATOR + str(s[1]) for s in self.all_possible_states]
         # Current value function
         current_value_function = dict()
         # The initial value function as a dict referred to by the string representation of the process states
-        initial_value_function = {s: 0.00001 for s in all_possible_states}
+        initial_value_function = {s: 1e-10 for s in all_possible_states}
         self.policy_iteration_iterations_array.append(0)
         self.policy_iteration_value_function_array.append(initial_value_function)
         # The previous value function
@@ -235,11 +244,16 @@ class EnergyHarvestingNode(object):
             iteration_count += 1
             self.policy_iteration_iterations_array.append(iteration_count)
         self.policy_iteration_optimality = current_policy
+        print('[INFO] EnergyHarvestingNode get_policy_iteration_optimality: The optimal policy is {}'.format(
+            current_policy))
+        print('[INFO] EnergyHarvestingNode get_policy_iteration_optimality: The optimal value function is {}'.format(
+            current_value_function))
+        print('[DEBUG] EnergyHarvestingNode get_policy_iteration_optimality: Policy Iteration completed...')
 
     # Evaluate the performance of the optimal policy vs the battery status and the fading state coefficients
     def evaluate_performance_of_optimality(self):
         # A random state choice for evaluation
-        state_choice = '9_10'
+        state_choice = '1_9'
         value_iteration_modified_value_iterations_array = [value[state_choice]
                                                            for value in self.value_iteration_value_function_array]
         policy_iteration_modified_value_iterations_array = [value[state_choice]
@@ -252,9 +266,9 @@ class EnergyHarvestingNode(object):
                 marker='o', color='b', label='Policy Iteration')
         fig.suptitle('Convergence Visualization of the Value Iteration and Policy Iteration Algorithms for the '
                      'Decision Engine in the given Energy Harvesting System considering system state '
-                     '$(Q_k=9,\ g_k=\gamma_{10}$)', fontsize=10)
+                     '$(Q_k=1,\ g_k=\gamma_{9}$)', fontsize=10)
         ax.set_xlabel('Number of Iterations', fontsize=14)
-        ax.set_ylabel('$V(Q_k=9,\ g_k=\gamma_{10}$)', fontsize=14)
+        ax.set_ylabel('$V(Q_k=1,\ g_k=\gamma_{9}$)', fontsize=14)
         ax.legend()
         plt.show()
 
@@ -300,6 +314,13 @@ if __name__ == '__main__':
     try:
         # Create the DecisionEngine instance
         decisionEngine = EnergyHarvestingNode()
+        # Print system status parameters
+        print('[INFO] EnergyHarvestingNode main: The battery has {} states'.format(
+            decisionEngine.MAX_BATTERY_ENERGY_MULTIPLIER + 1))
+        print('[INFO] EnergyHarvestingNode main: The channel has {} fading states'.format(
+            decisionEngine.NUMBER_OF_FADING_STATE_REALIZATIONS))
+        print('[INFO] EnergyHarvestingNode main: The energy harvesting success probability of the system is {}'.format(
+            decisionEngine.ENERGY_HARVESTING_SUCCESS_PROBABILITY))
         # Get the optimal policy from value iteration
         decisionEngine.get_value_iteration_optimality()
         # Get the optimal policy from policy iteration
