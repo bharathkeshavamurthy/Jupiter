@@ -1,0 +1,192 @@
+\documentclass{beamer}
+\mode<presentation>
+{
+  \usetheme{default}
+  \usecolortheme{default}
+  \usefonttheme{default}
+  \setbeamertemplate{navigation symbols}{}
+  \setbeamertemplate{caption}[numbered]
+} 
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\title[Your Short Title]{Cross-Layer Optimization in Decentralized Cognitive Radio Networks}
+\author{Bharath Keshavamurthy}
+\institute{School of Electrical and Computer Engineering, Purdue University}
+\date{24 April, 2019}
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+\begin{frame}{Outline}
+  \tableofcontents
+  \begin{itemize}
+      \item \textcolor{blue}{Motivation} – Why Cross-Layer Optimization?
+      \item \textcolor{blue}{Related Work} – What has been done already?
+      \item \textcolor{blue}{Challenges tackled in our work} - What is new?
+      \item \textcolor{blue}{System Model} - Just the important bits
+      \item \textcolor{blue}{Solution Approach} - Formulation and Decomposition
+      \item \textcolor{blue}{Results and Discussions} - Algorithms
+  \end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{Motivation - Why Cross-Layer Optimization?}
+\begin{itemize}
+  \item \textcolor{blue}{Objective}: Maximize the throughput of a set of assigned end-to-end multi-hop flows in a Secondary User (SU) network by intelligently exploiting the spectrum holes left unused by the licensed user
+  \item Pure divide-and-conquer protocol design strategies do not work because the performance across all layers are dependent on the \textcolor{blue}{resource allocation constraints and the incumbent interference constraints}.
+  \item \textcolor{blue}{A cross-layer optimization framework} is the way-to-go because it brings in requirements from all five layers of the stack with one global objective of maximizing the throughput while enforcing strict PU non-interference compliance.
+  \item Devise a \textcolor{blue}{distributed, layered solution} for the optimal performance of a cognitive radio node.
+\end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{Related Work – What has been done already?}
+\begin{itemize}
+  \item Y. Teng and M. Song, ``\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7859326&isnumber=7859429}{\textcolor{blue}{Cross-Layer Optimization and Protocol Analysis for Cognitive Ad Hoc Communications}}"
+  \begin{itemize}
+      \item Power Allocation, Channel Allocation, Routing, and Flow Rate Control solutions with MRR in the APP - GUOP formulations
+      \item Convex optimization using vertical decomposition techniques
+      \item Complexity analysis and heuristics to overcome the computational overhead/intractability
+  \end{itemize}
+  \item A. Cammarano, F. L. Presti, G. Maselli, L. Pescosolido and C. Petrioli, ``\href{http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6881740&isnumber=7180482}{\textcolor{blue}{Throughput-Optimal Cross-Layer Design for Cognitive Radio Ad Hoc Networks}}"
+  \begin{itemize}
+      \item MAC, Rate Control, and Flow Scheduling - NUM problem formulation
+      \item Common control channel for the dissemination of known channel occupancy behavior and queue lengths at links for different flows
+      \item A static multi-graph topology for the SU network and a conflict graph to capture scheduling constraints among sub-links
+  \end{itemize}
+\end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{Challenges tackled in our work - What is new?}
+\begin{itemize}
+    \item \textcolor{blue}{MCS adaptation in the PHY} – Frame it as an optimization problem and incorporate it into the cross-layer framework
+    \item \textcolor{blue}{An intelligent, process-interactive agent model} to learn the channel occupancy behavior of the incumbents
+    \item The incumbent channel occupancy behavior is not independent spatially and temporally – there exists a \textcolor{blue}{correlation model}
+    \item Different flows have different QoS constraints and hence, some flows need to be prioritized over others – \textcolor{blue}{weighted flow scheduling}
+\end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{System Model (just the important bits)}
+\begin{itemize}
+    \item \textcolor{blue}{Network Model}:
+    \begin{itemize}
+        \item A Secondary User network with $M$ licensed users, $N$ SU nodes, and $K$ channels of equal capacity $C$
+        \item $\mathcal{L}\ =\ \{(n,m;c): n,m \in \mathcal{N}, c \in \mathcal{C}\}$ denotes the set of all sub-links and $\mathcal{F}$ denotes the set of end-to-end flows assigned to the SU network with flow $f \in \mathcal{F}$ having weight/priority $w_f$
+    \end{itemize}
+    \item \textcolor{blue}{Link Adaptation Model}
+    \begin{itemize}
+        \item $PER\ =\ \phi(MCS_{choice}, \sigma_V^2, H, L)$
+        \item $\mathbb{P}(PER_{MCS_{choice}} > \gamma_{PER}) \leq \mu,\ 0 < \mu < 1$
+        \item PER Estimation and Approximation for each MCS
+    \end{itemize}
+    \item \textcolor{blue}{Flow Routing Model}:
+    \begin{itemize}
+        \item Non-negative and maximum flow rate constraints for $x_f \in [0,x_M]$
+        \item Node balance equations for the flows,
+        \begin{equation*}
+            \begin{cases}
+                x_f + \sum_{l \in \mathcal{L}_i(n)}\ s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}\ s_{fl}, & \text{if}\ n=s_{f},\ f \in \mathcal{F}\\
+                \sum_{l \in \mathcal{L}_i(n)}\ s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}\ s_{fl}, & \text{if}\ n\not=s_{f},\ d_f, f \in \mathcal{F}
+            \end{cases}
+        \end{equation*}
+    \end{itemize}
+\end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{System Model...}
+\begin{itemize}
+    \item \textcolor{blue}{Interference Model}: Two or more SUs cannot employ the same channel at the same time and none of the SUs can employ a channel that is being used by an incumbent in that time slot - captured by the conflict graph interpretation
+    \item \textcolor{blue}{Incumbent(s) Channel Occupancy Model}:
+    \\Temporal Markov Chain
+    \begin{equation*}
+        \mathbb{P}(\vec{X}(i+1)|\vec{X}(j),\ \forall j \leq i)\ =\ \mathbb{P}(\vec{X}(i+1)|\vec{X}(i))
+    \end{equation*}
+    Spatio-Temporal Markov Chain
+    \begin{equation*}
+        \mathbb{P}(\vec{X}(i+1)|\vec{X}(i))\ =\ 
+             \prod_{k=1}^K\ \mathbb{P}(X_{k+1}(i+1)|X_{k+1}(i),X_{k}(i+1))
+    \end{equation*}
+    \item \textcolor{blue}{Spectrum Access Model}: Formulate the spectrum access problem as a POMDP denoted by $(\mathcal{X},\ \mathcal{A},\ \mathcal{Y},\ \mathcal{B},\ A,\ B)$
+\end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{Solution Approach - Problem Formulation}
+    \begin{itemize}
+        \item \textcolor{blue}{Separate Correlation Model Problems}:
+        \begin{itemize}
+            \item \textcolor{blue}{Learn the model}:
+            $A^*, B^* = argmax_{A, B} \mathbb{P}(\vec{y} | A, B)$
+            \begingroup
+            \fontsize{8pt}{8pt}\selectfont
+                [MLE]
+            \endgroup
+            \item \textcolor{blue}{Estimate the occupancy states}: 
+            $\Vec{x}^*(i) = argmax_{\Vec{x}} \mathbb{P}(\Vec{X}(i)=\Vec{x}(i)|\Vec{Y}(i)=\Vec{y}(i))$
+            \begingroup
+            \fontsize{8pt}{8pt}\selectfont
+                [MAP]
+            \endgroup
+        \end{itemize}
+        \item \textcolor{blue}{Main Cross-Layer Numerical Utility Maximization Problem}
+        \begin{itemize}
+            \item \textcolor{blue}{Objective function}: $max_{f \in \mathcal{F}}\ \sum_{f \in \mathcal{F}}\ \frac{x_f^{(1-\eta)}}{(1-\eta)}$, $\eta > 0$
+            \item \textcolor{blue}{Power constraints}: $\forall n \in \mathcal{N}$, 
+            $P_{n, l}^{(f)} \geq 0$, 
+            \\$\sum_{f \in \mathcal{F}}\sum_{l \in \mathcal{L}_o(n)}P_{n,l}^{(f)} \leq P_n^{max}$
+            \item \textcolor{blue}{Packet Error Rate constraint for MCS adaptation}: $\mathbb{P}(PER_{MCS_{choice}} > \gamma_{PER}) \leq 0.05$
+            \item \textcolor{blue}{Constraints from the conflict graph interpretation}: $\sum_{I \in \mathcal{I}}\ p_I \theta_{Il} \leq \alpha_l,\ \forall l \in \mathcal{L}$, 
+            \\$\sum_{I \in \mathcal{I}}\ p_I = 1$, $p_I \geq 0,\ \forall I \in \mathcal{I}$
+            \item \textcolor{blue}{Flow routing constraints}: $x_f \in [0,x_M]$ and
+            \begin{equation*}
+                \begin{cases}
+                    x_f + \sum_{l \in \mathcal{L}_i(n)}\ s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}\ s_{fl}, & \text{if}\ n=s_{f},\ f \in \mathcal{F}\\
+                    \sum_{l \in \mathcal{L}_i(n)}\ s_{fl}\ =\ \sum_{l \in \mathcal{L}_o(n)}\ s_{fl}, & \text{if}\ n\not=s_{f},\ d_f, f \in \mathcal{F}
+                \end{cases}
+            \end{equation*}
+        \end{itemize}
+    \end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{Solution Approach - Important Decomposition Details }
+\begin{itemize}
+    \item Solving for $P^*$, $x^*$, $s^*$, and $p^*$
+    \item Formulate the Lagrangian and the various decomposed sub-problems are:
+    \begin{itemize}
+        \item \textcolor{blue}{MCS adaptation}: $max_{MCS}\ r_{MCS}(1 - PER_{MCS})$
+        \\PER computation and approximation - [\href{https://ieeexplore.ieee.org/document/4641969}{\textcolor{blue}{Tan et. al, 2008}}]
+        \item \textcolor{blue}{Flow Scheduling Dual Function}:
+        $max_{s}\ \sum_{l \in \mathcal{L}}\ \sum_{f \in \mathcal{F}}\ s_{fl}[w_f(q_{h(l)f} - q_{t(l)f})]$
+        \item \textcolor{blue}{Rate control dual function}:
+        \\$max_x\ (U_f(x_f) - q_{s(f)f}x_f)$
+        \item A POMDP agent (essentially on a quorum-designated gateway node) will disseminate the ``utility" of channels in the discretized spectrum of interest to all the SU nodes and this ``utility" will be encapsulated in the $\alpha_l$ variable in the cross-layer optimization problem.
+        \item \textcolor{blue}{MAC dual function}:
+        \begin{equation*}
+            \begin{aligned}
+                max_p\ \Big[- \frac{1}{\beta}\sum_{I \in \mathcal{I}}\ p_I log p_I + \sum_{I \in \mathcal{I}}\ p_I\sum_{l}\ (z_{nm} - w_l)a_{Il} + \\\sum_{l}\ w_l(\alpha_l - \epsilon)\Big]
+            \end{aligned}
+        \end{equation*}
+    \end{itemize}
+\end{itemize}
+\vskip 1cm    
+\end{frame}
+\begin{frame}{Results and Discussions - The Algorithms}
+\begin{itemize}
+    \item \textcolor{blue}{MCS selection algorithm}:
+    \begin{itemize}
+        \item Upon receiving a packet, the SU node computes the SNR of the sub-link using MMSE estimation and knowing the modulation scheme and code rate used at the transmitter, the SU node calculates the PER.
+        \item An exhaustive search (or a more optimal search, if possible) is performed over the set of MCS choices to determine their PER estimates. Then, choose an MCS such that,
+        $MCS_{choice}=argmax_{MCS}\ r_{MCS}(1 - PER_{MCS})$
+    \end{itemize}
+    \item \textcolor{blue}{Power allocation}:
+    $P_{n,l}^{f*} = \Big[\frac{\mathbb{I}(PU\ idle)\ \mathbb{J}(SUs\ m \not = n\ idle) BW_c}{\lambda_n ln 2} - \frac{\Gamma \sigma_V^2}{g_l}\Big]^+$
+    \item \textcolor{blue}{Prioritized Flow Scheduling}: Maximum weighted queue differential back-pressure with priority queues...
+    $s^* = argmax_s\ \sum_{l}\ \sum_{f}\ s_{fl}[w_f(q_{h(l)f} - q_{t(l)f})]$
+    \item \textcolor{blue}{Rate Control}: $x_f^* = U_f^{-1}(q_{s(f)f})$
+    \item \textcolor{blue}{MAC Protocol}: CSMA with back-off rate determined by,
+    $R_l = \frac{e^{\beta(z_{nm} - w_l)}}{\alpha_l}$ where $l=(n,m;c),\ n,m \in \mathcal{N},\ c \in \mathcal{C}$
+\end{itemize}
+\vskip 1cm
+\end{frame}
+\begin{frame}{}
+  \centering \Huge
+  \emph{Fin}
+\end{frame}
+\end{document}
