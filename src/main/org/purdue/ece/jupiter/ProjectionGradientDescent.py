@@ -65,7 +65,7 @@ class ProjectionGradientDescent(object):
             return 0, point
 
     # Project the point back to the feasible set
-    # oob_point => ouf-of-bounds point (gradient descent led to a point outside the feasible set)
+    # oob_point => out-of-bounds point (gradient descent led to a point outside the feasible set)
     def projection(self, oob_point):
         # Some random high distance for comparison
         min_distance = 10000
